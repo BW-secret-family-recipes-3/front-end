@@ -22,7 +22,7 @@ function App() {
           <Route path = "/user/login" component = {Login}/>
           <Route path = "/user/register" component = {Register}/>
           {/* ------------- React-2 team ---------------- */}
-          <PrivateRoute exact path = "/user/dashboard" component = {Dashboard}/>
+          <PrivateRoute path = "/user/dashboard" component = {Dashboard}/>
         </Switch>
       </Router>
     </div>
