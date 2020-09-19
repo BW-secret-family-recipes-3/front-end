@@ -1,11 +1,17 @@
 import React from 'react';
-import { connect } from "react-redux";
 
 function Recipe(props){
+    console.log(props.recipe);
+    const {recipe} = props;
     return(
         <div>
-            <h2>Recipe</h2>
+            <h4>Recipe</h4>
             {/* Recipe component goes here*/}
+            <p>Title: {recipe.title}</p>
+            <p>Source: {recipe.source}</p>
+            <p>Ingredients: {recipe.ingredients}</p>
+            <p>Instructions: {recipe.instructions}</p>
+            <p>Categories: {recipe.categories}</p>
         </div>
     );
 };
