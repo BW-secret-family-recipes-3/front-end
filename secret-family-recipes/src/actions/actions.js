@@ -40,3 +40,10 @@ export function fetchRecipes(token){
     }
 };
 
+// actions to be made: 
+// 1) post credentials for register
+// 2) post recipe for adding recipe
+// 3) put recipe for editing recipe
+// 4) delete recipe for deleting recipe
+// 5) filtering recipe for searching recipes
+
