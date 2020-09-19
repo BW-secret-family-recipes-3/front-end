@@ -26,6 +26,6 @@ function mapStateToProps(state) {
     return {
         recipes: state.recipes
     };
-}
+};
 
 export default connect(mapStateToProps, {})(ViewRecipes);

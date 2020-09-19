@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Recipe(props){
-    console.log(props.recipe);
     const {recipe} = props;
     return(
         <div>
