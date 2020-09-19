@@ -11,7 +11,7 @@ import * as serviceWorker from './serviceWorker';
 
 // create redux store
 
-const store = createStore(() => {}, applyMiddleware(thunk))
+const store = createStore(() => {}, applyMiddleware(thunk));
 
 // render App to Dom
 ReactDOM.render(
