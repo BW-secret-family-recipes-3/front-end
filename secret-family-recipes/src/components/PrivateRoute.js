@@ -8,13 +8,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         if (true) {
-          return <Component {...props} />
+          return <Component {...props} />;
         } else {
-          return <Redirect to="/user/login" />
-        }
-      }}
+          return <Redirect to="/user/login" />;
+        }}}
     />
   );
-}
+};
 
 export default PrivateRoute;
