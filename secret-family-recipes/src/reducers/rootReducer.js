@@ -1,7 +1,14 @@
+const FETCHING_TOKEN = "FETCHING_TOKEN";
+const FETCH_TOKEN_SUCCESS = "FETCH_SUCCESS";
+const FETCH_TOKEN_ERROR = "FETCH_TOKEN_ERROR";
+const FETCHING_RECIPES = "FETCHING_RECIPES";
+const FETCH_RECIPES_SUCCESS = "FETCH_RECIPES_SUCCESS";
+const FETCH_RECIPES_ERROR = "FETCH_RECIPES_ERROR";
+
 const initialState = {
     login: {
-        username: "",
-        password: "",
+        username: "TestingNew",
+        password: "Testing123",
         errors: ""
     },
     register: {
@@ -9,7 +16,12 @@ const initialState = {
         password: "",
         errors: ""
     },
-    token: "",
+    auth: {
+        inProgress: false,
+        token: '',
+        errors: {},
+        response: {}
+    },
     recipeToAdd: {},
     recipeToEdit: {},
     recipes: [
@@ -31,7 +43,14 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action){
-    switch(action.type){
+    const {type, payload} = action;
+    switch(type){
+        case FETCHING_TOKEN:
+            return {...state, auth: {inProgress: true}};
+        case FETCH_TOKEN_SUCCESS:
+            return {...state, auth: {inProgress: false, response: payload}};
+        case FETCH_TOKEN_ERROR:
+            return {...state, auth: {inProgress: false, errors: payload}};
         default:
             return state;
     };
