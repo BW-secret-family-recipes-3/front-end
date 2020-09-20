@@ -8,5 +8,7 @@ Initial-Setup complete: including CRA, Redux, Component Structure, Routing, and 
 
 Component Tree: ![Component Tree](/componentTree.jpg)
 
+App Actions: ![App Actions](/appACtions.jpg)
+
 Notes: diagram and full readme coming soon!
 

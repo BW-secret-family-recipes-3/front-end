@@ -39,7 +39,8 @@ const initialState = {
             instructions: "Grate potatoes, add egg whites, from into latkes, and shallow fry. Serve with applesauce and sour cream.",
             categories: ["holidays", "channukah", "thanksgiving", "fried"]
         }
-    ]
+    ],
+    filteredRecipes: []
 };
 
 function rootReducer(state = initialState, action){
