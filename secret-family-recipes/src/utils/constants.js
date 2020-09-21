@@ -12,3 +12,20 @@ export const exampleRecipes = [{
     instructions: "Grate potatoes, add egg whites, from into latkes, and shallow fry. Serve with applesauce and sour cream.",
     categories: ["holidays", "channukah", "thanksgiving", "fried"]
 }];
+
+const handleRegisterClick = () => {
+    console.log('in second handle click');
+    const user1 = {
+        username: 'user1',
+        password: 'password123',
+        email: 'williamajherman@gmail.com',
+        name: 'User One'
+    }
+    Axios.post('https://secret-family-backend.herokuapp.com/api/auth/register', user1)
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }

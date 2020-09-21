@@ -5,25 +5,28 @@ import axios from 'axios';
 
 // makeloginReq: 
 
-// accepts {username: <username>, password: <password>}
-
-
 export async function makeLoginReq(args) {
-    console.log('in make login req');
     const {username, password} = args;
     const URL = 'https://secret-family-backend.herokuapp.com/api/auth/login';
 
-    await axios.post(URL, {
+    return await axios.post(URL, {
         username: username,
         password: password
-    })
-        .then (res => {
-        console.log(res);
-    })
-        .catch (err => {
-        console.log(err);
     });
-    
-} 
+}; 
 
-// makeRegReq(): returns boolean flag true if succesful, false if unsuccessful accepts 
+// makeRegReq:
+
+export async function makeRegReq(args) {
+    console.log('in make reg req');
+    const {username, password, email, name} = args;
+    const URL = 'https://secret-family-backend.herokuapp.com/api/auth/register'
+    
+    return await axios.post(URL, {
+        username: username,
+        password: password,
+        email: email,
+        name: name
+    });
+}
+
