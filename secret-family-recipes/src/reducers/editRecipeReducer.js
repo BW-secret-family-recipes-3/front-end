@@ -10,18 +10,18 @@ const initialState = {
     response: {}
 };
 
-function getRecipesReducer(state = initialState, action){
+function editRecipeReducer(state = initialState, action){
     const {type, payload} = action;
     switch(type){
-        case GETTING_RECIPES:
+        case EDITING_RECIPE:
             return {...state, inProgress: true};
-        case GET_RECIPES_SUCCESS:
+        case EDIT_RECIPE_SUCCESS:
             return {...state, inProgress: false, recipeToEdit: {}, editedRecipe: {}, response: payload};
-        case GET_RECIPES_ERROR:
+        case EDIT_RECIPE_ERROR:
             return {...state, inProgress: false, errors: payload};
         default:
             return state;
     };
 };
 
-export default getRecipesReducer;
+export default editRecipeReducer;

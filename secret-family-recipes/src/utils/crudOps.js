@@ -39,6 +39,18 @@ export async function addRecipeReq(args) {
     return await axios.post(URL, recipe, {headers: header});
 }
 
+// getRecipesReq
+
+export async function getRecipesReq(args){
+    const {token, userID} = args;
+    const URL = `https://secret-family-backend.herokuapp.com/api/users/${userID}/recipes`;
+    const header = {Authorization: token};
+
+    return await axios.get(URL, {headers: header});
+
+}
+
+
 // editRecipeReq:
 
 export async function editRecipeReq(args) {
