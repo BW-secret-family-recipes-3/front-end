@@ -18,9 +18,8 @@ export async function makeLoginReq(args) {
 // makeRegReq:
 
 export async function makeRegReq(args) {
-    console.log('in make reg req');
     const {username, password, email, name} = args;
-    const URL = 'https://secret-family-backend.herokuapp.com/api/auth/register'
+    const URL = 'https://secret-family-backend.herokuapp.com/api/auth/register';
     
     return await axios.post(URL, {
         username: username,
@@ -28,5 +27,24 @@ export async function makeRegReq(args) {
         email: email,
         name: name
     });
+};
+
+// addRecipeReq:
+
+export async function addRecipeReq(args) {
+    const {recipe, token} = args;
+    const URL = 'https://secret-family-backend.herokuapp.com/api/users/recipes';
+    const header = {Authorization: token};
+
+    return await axios.post(URL, recipe, {headers: header});
 }
 
+// editRecipeReq:
+
+export async function editRecipeReq(args) {
+    const {editedRecipe, token, recipeID} = args;
+    const URL = `https://secret-family-backend.herokuapp.com/api/users/recipes/:${recipeID}`;
+    const header = {Authorization: token};
+
+    return await axios.put(URL, editedRecipe, {headers: header});
+}
