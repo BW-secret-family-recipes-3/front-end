@@ -6,15 +6,15 @@ import { connect } from "react-redux";
 import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
 // will move to login component 
-import { fetchToken } from '../actions/fetchToken';
-import { registerUser } from '../actions/registerUser'
+import { fetchTokenAction } from '../actions/fetchToken';
+import { registerUserAction } from '../actions/registerUser'
 
 function ViewRecipes(props){
 
     const {recipes, credentials, auth} = props;
     // will move to login component 
     const handleClick = () => {
-        props.fetchToken({username: 'user2', password: 'password2'});
+        props.fetchTokenAction({username: 'user2', password: 'password2'});
     };
 
     const tempUser = {
@@ -64,4 +64,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, {fetchToken, registerUser})(ViewRecipes);
+export default connect(mapStateToProps, {fetchTokenAction, registerUserAction})(ViewRecipes);
