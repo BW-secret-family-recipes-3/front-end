@@ -12,11 +12,11 @@ const initialState = {
 function deleteRecipeReducer(state = initialState, action){
     const {type, payload} = action;
     switch(type){
-        case EDITING_RECIPE:
+        case DELETING_RECIPE:
             return {...state, inProgress: true};
-        case EDIT_RECIPE_SUCCESS:
+        case DELETE_RECIPE_SUCCESS:
             return {...state, inProgress: false, recipeToDelete: {}, response: payload};
-        case EDIT_RECIPE_ERROR:
+        case DELETE_RECIPE_ERROR:
             return {...state, inProgress: false, errors: payload};
         default:
             return state;
