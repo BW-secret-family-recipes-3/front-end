@@ -10,6 +10,7 @@ const initialState = {
     response: {}
 };
 
+
 function editRecipeReducer(state = initialState, action){
     const {type, payload} = action;
     switch(type){
