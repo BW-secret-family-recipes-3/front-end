@@ -9,7 +9,7 @@ const initialState = {
     errors: {}
 };
 
-function editRecipeReducer(state = initialState, action){
+function deleteRecipeReducer(state = initialState, action){
     const {type, payload} = action;
     switch(type){
         case EDITING_RECIPE:
@@ -23,4 +23,4 @@ function editRecipeReducer(state = initialState, action){
     };
 };
 
-export default editRecipeReducer;
+export default deleteRecipeReducer;
