@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 // local imports
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import rootReducer from './reducers/rootReducer';
+import rootReducer from './reducers/index';
 // create redux store
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
