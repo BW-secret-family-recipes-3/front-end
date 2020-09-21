@@ -70,3 +70,13 @@ export async function deleteRecipeReq(args){
 
     return await axios.delete(URL, {headers: header});
 };
+
+// getUserReq:
+
+export async function getUserReq(args){
+    const {token} = args;
+    const URL = 'https://secret-family-backend.herokuapp.com/api/users/user'
+    const header = {Authorization: token};
+
+    return await axios.get(URL, {headers: header});
+}

@@ -4,6 +4,7 @@ import registerUserReducer from './registerUserReducer';
 import addRecipeReducer from './addRecipeReducer';
 import getRecipesReducers from './getRecipesReducer';
 import editRecipeReducer from './editRecipeReducer';
+import deleteRecipeReducer from './deleteRecipeReducer';
 
 
 const rootReducer = combineReducers(
@@ -11,9 +12,9 @@ const rootReducer = combineReducers(
         fetchToken: fetchTokenReducer,
         registerUser: registerUserReducer,
         addRecipe: addRecipeReducer,
-        getRecipesReducers: getRecipesReducers,
-        editRecipeReducer: editRecipeReducer
-    
+        getRecipes: getRecipesReducers,
+        editRecipe: editRecipeReducer,
+        deleteRecipe: deleteRecipeReducer
     });
 
 export default rootReducer;
