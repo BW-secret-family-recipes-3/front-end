@@ -10,7 +10,7 @@ const FETCH_TOKEN_ERROR = "FETCH_TOKEN_ERROR";
 // if axios call successfully returns token, dispatches token to reducer to be added to redux state via payload
 // if not, dispatches errors to reducer to be added to redux state via payload
 
-export const fetchToken = (credentials) => dispatch => {
+export const fetchTokenAction = (credentials) => dispatch => {
     console.log('in fetch token');
     dispatch({type: FETCHING_TOKEN});
     makeLoginReq(credentials)
