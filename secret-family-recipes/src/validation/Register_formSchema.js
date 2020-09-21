@@ -16,5 +16,5 @@ export default yup.object().shape({
         .string()
         .required('Password is required')
         .min(8, 'Password must be at least 8 characters')
-        .matches(/^[0-9a-zA-Z]+$/, 'Must contain only letters a-zA-Z and numbers 0-9'),
+        .matches(/^[0-9a-zA-Z]+$/, 'Must contain only uppercase and lowercase letters from A-Z and numbers from 0-9'),
 })

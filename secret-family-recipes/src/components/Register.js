@@ -71,7 +71,7 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null} */}
+                {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
                 <label>
                     Email
@@ -85,7 +85,7 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null} */}
+                {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
 
                 <label>
                     Choose a username*
@@ -99,6 +99,8 @@ function Register(props){
                     />
                 </label>
 
+                {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
+
                 <label>
                     Password*
                     <input 
@@ -111,7 +113,7 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null} */}
+                {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
                 <button disabled={disabled}>Submit</button>
 
