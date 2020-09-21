@@ -3,7 +3,25 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import * as yup from 'yup';
 import schema from '../validation/Login_formSchema';
+import styled from 'styled-components';
 
+/* Styled components */
+const ErrorMessage = styled.p`
+    color: red;
+`
+
+const Container = styled.div`
+    text-align: center;
+`
+
+const Form = styled.form`
+    border: solid black 2px;
+    width: 35%;
+    margin: auto;
+    padding: 2% 0;
+`
+
+/* Setting initial values */
 const initialFormValues = {
     username: '',
     password: '',
@@ -19,20 +37,14 @@ const initialDisabled = true;
 
 
 function Login(props){
-    /// state
-    // formvalues state
-    // formErrors 
-    // issformvalid state
+    /* Setting state */
     const [formValues, setFormValues] = useState(initialFormValues);
     const [errorValues, setErrorValues] = useState(initialErrorValues);
     const [disabled, setDisabled] = useState(initialDisabled);
+    const [users, setUsers] = useState([])
 
 
-
-
-    // needs username, password REQUIRED
-
-
+    /* Changing/validating form and error values on every key change*/
     const onChange = e => {
         const {name, value} = e.target;
         change(name, value);
@@ -44,13 +56,6 @@ function Login(props){
             ...formValues, [name]: value
         })
     };
-
-    useEffect(()=>{
-        schema.isValid(formValues)
-        .then(valid=>{
-            setDisabled(!valid)
-        })
-    }, [formValues]);
 
     const validate = (name, value) => {
         yup.reach(schema, name).validate(value)
@@ -66,6 +71,14 @@ function Login(props){
         })
     };
 
+    useEffect(()=>{
+        schema.isValid(formValues)
+        .then(valid=>{
+            setDisabled(!valid)
+        })
+    }, [formValues]);
+
+    /*Submitting form */
     const onSubmit = e => {
         e.preventDefault();
         console.log(formValues);
@@ -75,31 +88,31 @@ function Login(props){
 
     console.log(props)
     return(
-        <div>
+        <Container>
             <h2>Login</h2>
-            <form onSubmit={onSubmit}>
-                <label htmlFor='username'>
+            <Form onSubmit={onSubmit}>
+                <label htmlFor='username'>Username<br></br>
                     <input
                     type='text'
                     name='username'
                     value={formValues.username}
                     onChange={onChange} />
                 </label>
-                <p>{errorValues.username}</p>
+                <ErrorMessage>{errorValues.username}</ErrorMessage>
 
-                <label htmlFor='password'>
+                <label htmlFor='password'>Password<br></br>
                     <input
                     type='password'
                     name='password'
                     value={formValues.password}
                     onChange={onChange} />
                 </label>
-                <p>{errorValues.password}</p>
+                <ErrorMessage>{errorValues.password}</ErrorMessage>
 
                 <button disabled={disabled}>LOG IN</button>
-            </form>
+            </Form>
             
-        </div>
+        </Container>
     );
 };
 
