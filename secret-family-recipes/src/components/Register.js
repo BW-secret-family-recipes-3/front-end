@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
+import * as yup from 'yup'
+import schema from '../validation/Register_formSchema'
 
 import {registerUserAction} from '../actions/registerUser';
 
@@ -30,11 +32,35 @@ function Register(props){
 
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
+    const [disabled, setDisabled] = useState(true)
 
     const onChange = (event) => {
         const {name, value} = event.target
+        validateInput(name, value)
         setFormValues({...formValues, [name]: value})
     }
+
+    const validateInput = (name, value) => {
+        yup
+          .reach(schema, name)
+          .validate(value)
+          .then(() => {
+            setFormErrors({...formErrors, [name]: ''})
+          })
+          .catch(error => {
+            setFormErrors({...formErrors, [name]: error.errors[0]})
+          })
+      }
+
+      useEffect(() => {
+        schema.isValid(formValues)
+            .then(valid => {
+                setDisabled(!valid)
+            })
+            .catch(() => {
+                debugger
+            })
+      },[formValues])
 
     return(
         <div>
@@ -55,7 +81,7 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null} */}
+                {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
                 <label>
                     Email
@@ -69,10 +95,10 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null} */}
+                {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
 
                 <label>
-                    Choose a username
+                    Choose a username*
                     <input 
                         type='text'
                         name='username'
@@ -83,8 +109,10 @@ function Register(props){
                     />
                 </label>
 
+                {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
+
                 <label>
-                    Password
+                    Password*
                     <input 
                         type='password'
                         name='password'
@@ -95,9 +123,9 @@ function Register(props){
                     />
                 </label>
 
-                {/* {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null} */}
+                {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
-                <button>Submit</button>
+                <button disabled={disabled}>Submit</button>
 
                 {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
 
