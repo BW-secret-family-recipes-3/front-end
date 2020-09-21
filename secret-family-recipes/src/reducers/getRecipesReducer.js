@@ -5,7 +5,8 @@ const GET_RECIPES_ERROR = "GET_RECIPES_ERROR";
 const initialState = {
     inProgress: false,
     userRecipes: [],
-    errors: {}
+    response: {},
+    errors: {},
 };
 
 function getRecipesReducer(state = initialState, action){
