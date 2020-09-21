@@ -4,6 +4,8 @@ import axios from 'axios';
 import * as yup from 'yup';
 import schema from '../validation/Login_formSchema';
 
+import {fetchTokenAction} from '../actions/fetchToken'
+
 const initialFormValues = {
     username: '',
     password: '',
@@ -19,6 +21,14 @@ const initialDisabled = true;
 
 
 function Login(props){
+    console.log(props.state);
+
+    const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
+
+    const createFetchTokenAction = (loginObject) => {  // use this to submit your login form
+        return fetchTokenAction(loginObject);          // loginObject must have shape: {username: <username>, password: <password>}
+    }
+
     /// state
     // formvalues state
     // formErrors 
@@ -104,4 +114,10 @@ function Login(props){
 };
 
 
-export default Login;
+function mapStateToProps(state) {
+    return {
+        state: state.fetchToken
+    };
+};
+
+export default connect(mapStateToProps, {fetchTokenAction})(Login);

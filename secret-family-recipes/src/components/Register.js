@@ -28,8 +28,6 @@ function Register(props){
     }                                                     // if no email or name just submit an empty string
 
 
-
-
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
 
