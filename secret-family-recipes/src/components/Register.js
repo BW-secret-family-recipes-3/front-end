@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
 
+import {registerUserAction} from '../actions/registerUser';
+
 const initialFormValues = {
     name: '',
     email: '',
@@ -18,6 +20,16 @@ const initialFormErrors = {
 function Register(props){
     // username, password REQUIRED
     // name, email OPTIONAL
+
+    const {inProgress, response, userToRegister, errors} = props.state; // global state passed in as props
+
+    const createRegisterUserAction = (userObject) => {    // use this to submit your form values, you will find a response to your submission in the global state values
+        return registerUserAction(userObject);            // userObject must have shape -> {username: <username>, password: <password>, email: <email>, name: <name> }
+    }                                                     // if no email or name just submit an empty string
+
+
+
+
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
 
@@ -97,4 +109,10 @@ function Register(props){
     );
 };
 
-export default Register;
+function mapStateToProps(state) {
+    return {
+        state: state.registerUser
+    };
+};
+
+export default connect(mapStateToProps, {registerUserAction})(Register);

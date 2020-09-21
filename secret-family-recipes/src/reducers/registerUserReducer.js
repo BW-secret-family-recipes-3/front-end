@@ -4,7 +4,8 @@ const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
 
 const initialState = {
     inProgress: false,
-    respnse: {},
+    userToRegister: {},
+    response: {},
     errors: {}
 };
 

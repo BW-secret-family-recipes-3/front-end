@@ -7,7 +7,7 @@ import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
 // will move to login component 
 import { fetchToken } from '../actions/fetchToken';
-import { registerUser } from '../actions/registerUser'
+import { registerUserAction } from '../actions/registerUser'
 
 function ViewRecipes(props){
 
@@ -64,4 +64,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, {fetchToken, registerUser})(ViewRecipes);
+export default connect(mapStateToProps, {fetchToken, registerUserAction})(ViewRecipes);
