@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import * as yup from 'yup'
 import schema from '../validation/Register_formSchema'
@@ -22,6 +22,7 @@ function Register(props){
     // name, email OPTIONAL
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
+    const [disabled, setDisabled] = useState(true)
 
     const onChange = (event) => {
         const {name, value} = event.target
@@ -40,6 +41,16 @@ function Register(props){
             setFormErrors({...formErrors, [name]: error.errors[0]})
           })
       }
+
+      useEffect(() => {
+        schema.isValid(formValues)
+            .then(valid => {
+                setDisabled(!valid)
+            })
+            .catch(() => {
+                debugger
+            })
+      },[formValues])
 
     return(
         <div>
@@ -77,7 +88,7 @@ function Register(props){
                 {/* {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null} */}
 
                 <label>
-                    Choose a username
+                    Choose a username*
                     <input 
                         type='text'
                         name='username'
@@ -89,7 +100,7 @@ function Register(props){
                 </label>
 
                 <label>
-                    Password
+                    Password*
                     <input 
                         type='password'
                         name='password'
@@ -102,7 +113,7 @@ function Register(props){
 
                 {/* {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null} */}
 
-                <button>Submit</button>
+                <button disabled={disabled}>Submit</button>
 
                 {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
 

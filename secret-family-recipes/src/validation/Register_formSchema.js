@@ -4,8 +4,7 @@ import * as yup from 'yup'
 //Schema object
 export default yup.object().shape({
     name: yup
-        .string()
-        .min(3, 'Name must be at least 3 characters'),
+        .string(),
     email: yup
         .string()
         .email('Must be a valid email address'),
@@ -16,5 +15,6 @@ export default yup.object().shape({
     password: yup
         .string()
         .required('Password is required')
-        .min(8, 'Password must be at least 8 characters'),
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/^[0-9a-zA-Z]+$/, 'Must contain only letters a-zA-Z and numbers 0-9'),
 })
