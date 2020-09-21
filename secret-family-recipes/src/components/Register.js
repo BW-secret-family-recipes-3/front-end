@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
+import * as yup from 'yup'
+import schema from '../validation/Register_formSchema'
 
 const initialFormValues = {
     name: '',
@@ -23,8 +25,21 @@ function Register(props){
 
     const onChange = (event) => {
         const {name, value} = event.target
+        validateInput(name, value)
         setFormValues({...formValues, [name]: value})
     }
+
+    const validateInput = (name, value) => {
+        yup
+          .reach(schema, name)
+          .validate(value)
+          .then(() => {
+            setFormErrors({...formErrors, [name]: ''})
+          })
+          .catch(error => {
+            setFormErrors({...formErrors, [name]: error.errors[0]})
+          })
+      }
 
     return(
         <div>
