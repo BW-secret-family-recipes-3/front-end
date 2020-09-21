@@ -8,6 +8,10 @@ const FETCH_TOKEN_ERROR = "FETCH_TOKEN_ERROR";
 const FETCHING_RECIPES = "FETCHING_RECIPES";
 const FETCH_RECIPES_SUCCESS = "FETCH_RECIPES_SUCCESS";
 const FETCH_RECIPES_ERROR = "FETCH_RECIPES_ERROR";
+const ADDING_RECIPE = "ADDING_RECIPE";
+const ADD_RECIPE_SUCCESS = "ADD_RECIPE_SUCCESS";
+const ADD_RECIPE_ERROR = "ADD_RECIPE_ERROR";
+
 // ACTIONS
 
 // action to get authorization token. args: credentials from component that calls it
@@ -66,4 +70,3 @@ export function fetchRecipes(token){
 // 3) put recipe for editing recipe
 // 4) delete recipe for deleting recipe
 // 5) filtering recipe for searching recipes
-
