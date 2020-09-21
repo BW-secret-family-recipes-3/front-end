@@ -69,4 +69,4 @@ export async function deleteRecipeReq(args){
     const header = {Authorization: token};
 
     return await axios.delete(URL, {headers: header});
-}
+};
