@@ -38,7 +38,7 @@ const initialDisabled = true;
 
 function Login(props){
 
-    // console.log(props.state);
+    console.log(props.state);
 
     const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
 
