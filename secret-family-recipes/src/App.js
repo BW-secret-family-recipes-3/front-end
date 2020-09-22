@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <h1>Secrete Family Recipes</h1>
       <Router>
-        <NavBar/>
+        <NavBarBasic/>
         <Switch>
           {/* ------------- React-1 team ---------------- */}
           <Route exact path = "/" component = {Home}/>

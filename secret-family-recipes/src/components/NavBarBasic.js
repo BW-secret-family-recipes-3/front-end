@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 
 
-function NavBar(props){
+function NavBarBasic(props){
 
     const {loggedIn} = props.state;
 
