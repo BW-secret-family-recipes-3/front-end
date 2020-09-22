@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import schema from '../validation/Register_formSchema'
 import styled from 'styled-components'
 
+//Import actions
 import {registerUserAction} from '../actions/registerUser';
 
 //Initial state values
@@ -32,33 +33,19 @@ const StyledForm = styled.form`
 `
 
 function Register(props){
-    // username, password REQUIRED
-    // name, email OPTIONAL
+    //Props
     const { registerUserAction } = props;
-    const {inProgress, response, userToRegister, errors} = props.state; // global state passed in as props
-    const createRegisterUserAction = (userObject) => {    // use this to submit your form values, you will find a response to your submission in the global state values
-        return registerUserAction(userObject);            // userObject must have shape -> {username: <username>, password: <password>, email: <email>, name: <name> }
-    }                                                     // if no email or name just submit an empty string
-
-
+    const {inProgress, response, userToRegister, errors} = props.state;
+    
+    //State
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
-    const [disabled, setDisabled] = useState(false)
+    const [missingFields, setMissingFields] = useState(false)
     const [usernameError, setUsernameError] = useState(null)
 
-    useEffect(() => {
-        if (errors.response) {
-            setUsernameError(errors.response.data.message)
-        } else {
-            return
-        }
-    }, [errors.response])
-
-    const onChange = (event) => {
-        event.preventDefault();
-        const {name, value} = event.target
-        validateInput(name, value)
-        setFormValues({...formValues, [name]: value})
+    //Helper Functions
+    const createRegisterUserAction = (userObject) => {
+        return registerUserAction(userObject);
     }
 
     const submitHelper = () => {
@@ -72,10 +59,10 @@ function Register(props){
                 if (valid) {
                     submitHelper()
                     setFormValues(initialFormValues)
-                    setDisabled(false)
+                    setMissingFields(false)
                 }
                 else {
-                    setDisabled(true)
+                    setMissingFields(true)
                 }
             })
             .catch(() => {
@@ -86,10 +73,14 @@ function Register(props){
             })
     }
 
-    const hoverHandler = (event) => {
-        
+    //
+    const onChange = (event) => {
+        const {name, value} = event.target
+        validateInput(name, value)
+        setFormValues({...formValues, [name]: value})
     }
 
+    //Input validator
     const validateInput = (name, value) => {
         yup
           .reach(schema, name)
@@ -102,17 +93,16 @@ function Register(props){
           })
       }
 
-    //   useEffect(() => {
-    //     schema.isValid(formValues)
-    //         .then(valid => {
-    //             setDisabled(!valid)
-    //         })
-    //         .catch(() => {
-    //             debugger
-    //         })
-    //   },[formValues])
+      //Use effects
+      useEffect(() => {
+        if (errors.response) {
+            setUsernameError(errors.response.data.message)
+        } else {
+            return
+        }
+    }, [errors.response])
 
-      
+    //Register Component
     return(
         <div>
             <StyledForm>
@@ -162,11 +152,11 @@ function Register(props){
 
                 {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
-                <button onClick = {onSubmit} onMouseEnter={hoverHandler}>Submit</button>
+                <button onClick = {onSubmit}>Submit</button>
 
                 {usernameError ? <p style={{color: 'red'}} id='submit-error'>{usernameError}</p> : null}
                 
-                { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null}
+                { missingFields ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null}
 
             </StyledForm>
            
