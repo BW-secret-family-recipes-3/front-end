@@ -32,6 +32,9 @@ function Register(props){
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     const [disabled, setDisabled] = useState(true)
+    const [submitError, setSubmitError] = useState('')
+
+    const errorMessage = props.state.errors.response ? props.state.errors.response.data.message : null
 
     const onChange = (event) => {
         event.preventDefault();
@@ -40,10 +43,14 @@ function Register(props){
         setFormValues({...formValues, [name]: value})
     }
 
+    const submitHelper = () => {
+        return createRegisterUserAction(formValues);
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
-        
-        return createRegisterUserAction(formValues);
+        submitHelper()
+        setFormValues(initialFormValues)
     }
 
     const validateInput = (name, value) => {
@@ -68,6 +75,7 @@ function Register(props){
             })
       },[formValues])
 
+      
     return(
         <div>
             <h2>Register</h2>
@@ -133,7 +141,7 @@ function Register(props){
 
                 <button onClick = {onSubmit}>Submit</button>
 
-
+                {errorMessage ? <p style={{color: 'red'}} id='password-error'>{errorMessage}</p> : null}
                 {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
 
             </form>
