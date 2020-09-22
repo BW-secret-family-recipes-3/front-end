@@ -1,9 +1,11 @@
+//Import dependencies
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUtensils } from '@fortawesome/free-solid-svg-icons'
+
+//Import components
+import NavBar from './NavBar'
 
 // const StyledHeader = styled.div`
 //     display: flex;
@@ -13,23 +15,13 @@ import { faUtensils } from '@fortawesome/free-solid-svg-icons'
 //     color: ${pr => pr.theme.primaryColor};
 // `
 
-const StyledNav = styled.nav`
-    display: flex;
-    justify-content: space-between;
 
-`
 
 function Home(props){
     return(
         <div>
             {/* Nav Bar component goes here */}
-                <StyledNav>
-                    <FontAwesomeIcon icon={faUtensils}/>
-                    <nav>
-                    <Link to='/user/login'>Login</Link>
-                    <Link to ='/user/register'>Register</Link>
-                    </nav>
-                </StyledNav>
+                <NavBar></NavBar>
             
             {/* div with login/register button */}
             
