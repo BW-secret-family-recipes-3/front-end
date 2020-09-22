@@ -1,10 +1,13 @@
+//Import dependencies
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import * as yup from 'yup'
 import schema from '../validation/Register_formSchema'
+import styled from 'styled-components'
 
 import {registerUserAction} from '../actions/registerUser';
 
+//Initial state values
 const initialFormValues = {
     name: '',
     email: '',
@@ -19,6 +22,15 @@ const initialFormErrors = {
     password: '',
 }
 
+//Styled Form
+const StyledForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+`
+
 function Register(props){
     // username, password REQUIRED
     // name, email OPTIONAL
@@ -31,10 +43,16 @@ function Register(props){
 
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
-    const [disabled, setDisabled] = useState(true)
-    const [submitError, setSubmitError] = useState('')
+    const [disabled, setDisabled] = useState(false)
+    const [usernameError, setUsernameError] = useState(null)
 
-    const errorMessage = props.state.errors.response ? props.state.errors.response.data.message : null
+    useEffect(() => {
+        if (errors.response) {
+            setUsernameError(errors.response.data.message)
+        } else {
+            return
+        }
+    }, [errors.response])
 
     const onChange = (event) => {
         event.preventDefault();
@@ -48,9 +66,28 @@ function Register(props){
     }
 
     const onSubmit = (e) => {
-        e.preventDefault();
-        submitHelper()
-        setFormValues(initialFormValues)
+        e.preventDefault()
+        schema.isValid(formValues)
+            .then((valid) => {
+                if (valid) {
+                    submitHelper()
+                    setFormValues(initialFormValues)
+                    setDisabled(false)
+                }
+                else {
+                    setDisabled(true)
+                }
+            })
+            .catch(() => {
+                debugger
+            })
+            .finally(() => {
+                setUsernameError(null)
+            })
+    }
+
+    const hoverHandler = (event) => {
+        
     }
 
     const validateInput = (name, value) => {
@@ -65,86 +102,73 @@ function Register(props){
           })
       }
 
-      useEffect(() => {
-        schema.isValid(formValues)
-            .then(valid => {
-                setDisabled(!valid)
-            })
-            .catch(() => {
-                debugger
-            })
-      },[formValues])
+    //   useEffect(() => {
+    //     schema.isValid(formValues)
+    //         .then(valid => {
+    //             setDisabled(!valid)
+    //         })
+    //         .catch(() => {
+    //             debugger
+    //         })
+    //   },[formValues])
 
       
     return(
         <div>
-            <h2>Register</h2>
+            <StyledForm>
+                <h2>Register</h2>
 
-
-            <form>
-
-                <label>
-                    Your Name
-                    <input 
-                        type='text'
-                        name='name'
-                        value={formValues.name}
-                        placeholder='Name'
-                        onChange={onChange}
-                        id='name-input'
-                    />
-                </label>
-
+                <label>Your Name</label>
+                <input
+                    type='text'
+                    name='name'
+                    value={formValues.name}
+                    onChange={onChange}
+                    id='name-input'
+                />
+                
                 {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
-                <label>
-                    Email
-                    <input 
-                        type='email'
-                        name='email'
-                        value={formValues.email}
-                        placeholder='email'
-                        onChange={onChange}
-                        id='email-input'
-                    />
-                </label>
-
+                <label>Email</label>
+                <input
+                    type='email'
+                    name='email'
+                    value={formValues.email}
+                    onChange={onChange}
+                    id='email-input'
+                />
+                
                 {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
 
-                <label>
-                    Choose a username*
-                    <input 
-                        type='text'
-                        name='username'
-                        value={formValues.username}
-                        placeholder='username'
-                        onChange={onChange}
-                        id='username-input'
-                    />
-                </label>
-
+                <label>Username<span style={{color: 'red'}}>*</span></label>
+                <input
+                    type='text'
+                    name='username'
+                    value={formValues.username}
+                    onChange={onChange}
+                    id='username-input'
+                />
+                
                 {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
 
-                <label>
-                    Password*
-                    <input 
-                        type='password'
-                        name='password'
-                        value={formValues.password}
-                        placeholder='password'
-                        onChange={onChange}
-                        id='password-input'
-                    />
-                </label>
+                <label>Password<span style={{color: 'red'}}>*</span></label>
+                <input
+                    type='password'
+                    name='password'
+                    value={formValues.password}
+                    onChange={onChange}
+                    id='password-input'
+                />
 
                 {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
-                <button onClick = {onSubmit}>Submit</button>
+                <button onClick = {onSubmit} onMouseEnter={hoverHandler}>Submit</button>
 
-                {errorMessage ? <p style={{color: 'red'}} id='password-error'>{errorMessage}</p> : null}
-                {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
+                {usernameError ? <p style={{color: 'red'}} id='submit-error'>{usernameError}</p> : null}
+                
+                { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null}
 
-            </form>
+            </StyledForm>
            
         </div>
     );
