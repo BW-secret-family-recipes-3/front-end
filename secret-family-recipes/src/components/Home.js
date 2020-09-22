@@ -93,9 +93,9 @@ function Home(props){
         axiosCall()
     }
 
-    useEffect(() => {
-        axiosCall()
-    }, [])
+    // useEffect(() => {
+    //     axiosCall()
+    // }, [])
 
     return(
         <StyledHome>
