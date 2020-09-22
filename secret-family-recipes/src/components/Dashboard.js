@@ -12,11 +12,11 @@ import {getUserAction} from '../actions/getUser'
 
 function Dashboard(props){
 
-    console.log(props.state);
+    console.log(props.tokenState);
 
     useEffect(() => {
-        props.getUserAction(props.state.token);
-    },[props.state.token])
+        props.getUserAction({token: props.tokenState.token});
+    },[props.tokenState.token])
     
     return(
         <div>
@@ -36,7 +36,8 @@ function Dashboard(props){
 
 function mapStateToProps(state) {
     return {
-        state: state.fetchToken
+        tokenState: state.fetchToken,
+        userState: state.user
     };
 };
 
