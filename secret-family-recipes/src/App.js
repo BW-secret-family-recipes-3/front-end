@@ -14,7 +14,6 @@ import Dashboard from "./components/Dashboard"
 function App() {
   return (
     <div className="App">
-      <h1>Secrete Family Recipes</h1>
       <Router>
         <Switch>
           {/* ------------- React-1 team ---------------- */}

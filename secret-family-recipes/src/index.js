@@ -11,6 +11,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './reducers/index';
 import theme from './theme/theme'
+import './index.css'
 // create redux store
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
