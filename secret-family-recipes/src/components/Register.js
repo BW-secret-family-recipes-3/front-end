@@ -42,6 +42,7 @@ function Register(props){
 
     const onSubmit = (e) => {
         e.preventDefault();
+        
         return createRegisterUserAction(formValues);
     }
 
