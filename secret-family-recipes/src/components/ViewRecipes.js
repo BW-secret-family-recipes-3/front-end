@@ -9,22 +9,41 @@ import {getRecipesAction} from '../actions/getRecipes'
 
 function ViewRecipes(props){
 
+    // destructuring prpos
     const {getRecipesAction, tokenState, userState, getRecipes} = props;
     console.log(props);
 
+    // fetching recipes
     useEffect(() => {
         getRecipesAction(tokenState.token, userState.userId)
     },[getRecipes.needsUpdating])
 
+    // if there are recipes in the array...
+    const RecipesToDisplay = () => {
+        return (
+            <div>
+                 <SearchRecipes/>
+                {getRecipes.userRecipes.map(r => {
+                    return <Recipe recipe = {r}/>
+                })}
+            </div>
+        );
+    };
+
+    // if no recipes in the array...
+    const NoRecipesToDisplay = () => {
+        return(
+            <div>
+                <p>no recipes added yet!</p>
+            </div>
+        );
+    };
+    
     return (
         <div>
             <h2>View Recipes</h2>
-            <SearchRecipes/>
-            {/* ViewRecipes component goes here*/}
             <div className = "recipesContainer">
-                {/* {recipes.map(r => {
-                    return <Recipe key = {r.title} recipe = {r}/>
-                })} */}
+                {getRecipes.userRecipes.length ? RecipesToDisplay() : NoRecipesToDisplay()}
             </div>
         </div>
     );
