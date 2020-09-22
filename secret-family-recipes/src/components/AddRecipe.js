@@ -16,13 +16,19 @@ function AddRecipe(props){
         {...blankInstruction}
     ]);
 
+    const [categoriesState, setCategoriesState] = useState(['']);
+
     const addIngredient = () => {
         setIngredientsState([...ingredientsState, {...blankIngredient}]);
     };
 
     const addInstruction = () => {
         setInstructionsState([...instructionsState, {...blankInstruction}]);
-    }
+    };
+
+    const addCategory = () => {
+        setCategoriesState([...categoriesState, ''])
+    };
 
     const handleIngredientsChange = (e) => {
        const updatedIngredients = [...ingredientsState];
@@ -34,6 +40,12 @@ function AddRecipe(props){
         const updatedInstructions = [...instructionsState];
         updatedInstructions[e.target.dataset.idx][e.target.className] = e.target.value;
         setInstructionsState(updatedInstructions);
+    }
+
+    const handleCategoryChange = (e) => {
+        const updatedCategories = [...categoriesState];
+        updatedCategories[e.target.dataset.idx][e.target.className] = e.target.value;
+        setCategoriesState(updatedCategories);
     }
 
 
@@ -49,6 +61,8 @@ function AddRecipe(props){
         [e.target.name]: [e.target.value]
     });
 
+    // add recipe submit
+
     // jsx
 
     return(
@@ -62,28 +76,47 @@ function AddRecipe(props){
                     <input type="text" name="source" id="source" value = {staticState.source} onChange = {handleStaticChange}/>
                 </div> 
                 <div className = "dynamic-inputs">
-                    <input type="button" value="Add New Ingredient" onClick={addIngredient} /> 
-                    {ingredientsState.map((val, idx) => {
-                        return <DynamicInputs
-                                key = {idx}
-                                idx = {idx}
-                                dynamicState = {ingredientsState}
-                                handleDynamicChange = {handleIngredientsChange}
-                                field1 = "ingredient"
-                                field2 = "measurement"
-                                />
-                    })}
-                    <input type="button" value="Add New Instruction" onClick={addInstruction} />  
-                    {instructionsState.map((val, idx) => {
-                        return <DynamicInputs
-                                key = {idx}
-                                idx = {idx}
-                                dynamicState = {instructionsState}
-                                handleDynamicChange = {handleInstructionsChange}
-                                field1 = "step"
-                                field2 = "description"
-                                />
-                    })}
+                    <div className = "ingredients-inputs">
+                        <h4>Ingredients</h4>
+                        <input type="button" value="Add New Ingredient" onClick={addIngredient} /> 
+                        {ingredientsState.map((val, idx) => {
+                            return <DynamicInputs
+                                    key = {idx}
+                                    idx = {idx}
+                                    dynamicState = {ingredientsState}
+                                    handleDynamicChange = {handleIngredientsChange}
+                                    field1 = "ingredient"
+                                    field2 = "measurement"
+                                    />
+                        })}
+                    </div>
+                    <div className = "instructions-inputs">
+                        <h4>Instructions</h4>
+                        <input type="button" value="Add New Instruction" onClick={addInstruction} />  
+                        {instructionsState.map((val, idx) => {
+                            return <DynamicInputs
+                                    key = {idx}
+                                    idx = {idx}
+                                    dynamicState = {instructionsState}
+                                    handleDynamicChange = {handleInstructionsChange}
+                                    field1 = "step"
+                                    field2 = "description"
+                                    />
+                        })}
+                    </div>
+                    <div className = "categories-inputs">
+                        <h4>Categories</h4>
+                        <input type="button" value="Add New Category" onClick={addCategory} /> 
+                        {categoriesState.map((val, idx) => {
+                            return <DynamicInput
+                                    key = {idx}
+                                    idx = {idx}
+                                    dynamicState = {categoriesState}
+                                    handleDynamicChange = {handleCategoryChange}
+                                    field = "category"
+                                    />
+                        })}
+                    </div>
                 </div>         
                 <input type="submit" value="Submit" />  
             </form>
