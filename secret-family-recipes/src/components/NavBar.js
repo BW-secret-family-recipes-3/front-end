@@ -29,6 +29,7 @@ const StyledNav = styled.nav`
             border: 2px solid slategray;
             border-radius: 8px;
             padding: 1.5% 1.5%;
+            transition: all 0.3s ease-in-out;
 
             &:visited {
                 color: slategray;
@@ -37,6 +38,7 @@ const StyledNav = styled.nav`
             &:hover {
                 color: Darkorange;
                 border-color: Darkorange;
+                transition: all 0.3s ease-in-out;
             }
         }
 
@@ -55,9 +57,9 @@ export default function NavBar() {
         < StyledNav >
             <FontAwesomeIcon icon={faUtensils} />
             <nav>
-                <Link to='/user/login'>Login</Link>
+                <Link to='/user/login'>LOGIN</Link>
                 <span></span>
-                <Link to='/user/register'>Register</Link>
+                <Link to='/user/register'>SIGN UP</Link>
             </nav>
         </StyledNav >
     )
