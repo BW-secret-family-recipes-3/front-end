@@ -12,8 +12,14 @@ import ImageCard from './ImageCard'
 
 //Styled Home
 const StyledHome = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
     div.headerImage {
-        height: 45vh;
+        width: 100%;
+        height: 35vh;
         background-image: url(${headerImage});
         background-size: cover;
         display: flex;
@@ -45,11 +51,28 @@ const StyledHome = styled.div`
             }
         }
     }
+
      div.imageGallery {
         display: flex; 
         flex-direction: row;
         justify-content: space-evenly;
         margin: 5% 0;
+     }
+
+     button {
+        margin: 0 5%;
+        border: 2px solid slategray;
+        background-color: white;
+        color: slategray;
+        border-radius: 8px;
+        padding: 1.5% 1.5%;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            color: Darkorange;
+            border-color: Darkorange;
+            transition: all 0.3s ease-in-out;
+        }
      }
 `
 
@@ -57,32 +80,45 @@ const StyledHome = styled.div`
 function Home(props){
     const [recipes, setRecipes] = useState([])
     
-    const clickHandler = (event) => {
-        axios.get('https://api.spoonacular.com/recipes/random?number=3&apiKey=8c2984ed38a6424b97b2f5826036ca39')
+    const axiosCall = () => {
+        axios.get('https://api.spoonacular.com/recipes/random?number=3&apiKey=7cc561dde52e4fccbe334a2cdcfa67ea')
             .then(response => {
-                console.log(response.data)
-                setRecipes(response.data)
+                setRecipes(response.data.recipes)
             })
             .catch(error => {
                 console.log(error)
             })
     }
 
+    const clickHandler = (event) => {
+        axiosCall()
+    }
+
+    useEffect(() => {
+        axiosCall()
+    }, [])
+
     return(
         <StyledHome>
+
             <NavBar />
+
             <div className='headerImage'>
                 <h1>Grandma's Secret Recipes</h1>
                 <Link to='/user/register'>GET STARTED</Link>
             </div>
-            {/* div with image card gallery */}
+
             <div className='imageGallery'>
-                <ImageCard/>
-                <ImageCard/>
-                <ImageCard/>
+                {recipes ? 
+                recipes.map(recipe => 
+                    <ImageCard key={recipe.id} recipeInfo={recipe}/>
+                )
+                : <p>Loading...</p>
+                }
             </div>
-            <button onClick={clickHandler}>Get New Recipes</button>
-            {/* footer bar */}
+
+            <button onClick={clickHandler}>GET NEW RECIPES</button>
+
         </StyledHome>
     );
 };

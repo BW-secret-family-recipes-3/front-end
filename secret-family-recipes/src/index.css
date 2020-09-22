@@ -73,3 +73,12 @@ h1, h2, h3, h4 {
 h1 {
 	font-size: 5rem;
 }
+
+h2 {
+	font-size: 3rem;
+}
+
+button {
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.6rem;
+}

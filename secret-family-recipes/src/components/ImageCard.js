@@ -13,15 +13,25 @@ const StyledImage = styled.div`
     border: 1px solid rgb(210, 210, 210);
     border-radius: 6px;
     box-shadow: 0px 1px 6px -2px rgb(128, 127, 127);
-    background-color: white;
+    background-image: url(${pr => pr.url});
+    background-size: cover;
+    background-position: center;
+
+    div.textContainer {
+        width: 100%;
+        background-color: rgb(255, 255, 255, .7);
+        text-align: center;
+    }
 `
 
 //ImageCard Component
-export default function ImageCard() {
+export default function ImageCard(props) {
+    const {image, title} = props.recipeInfo
     return (
-        <StyledImage>
-            <div className='imageContainer'>Image Here</div>
-            <div className='textContainer'>Text Here</div>
+        <StyledImage url={image}>
+            <div className='textContainer'>
+                <h2>{title}</h2>
+            </div>
         </StyledImage>
     )
 }
