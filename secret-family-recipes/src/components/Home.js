@@ -7,7 +7,6 @@ import headerImage from '../images/cutting-board-header.jpg'
 import axios from 'axios'
 
 //Import components
-import NavBar from './NavBar'
 import ImageCard from './ImageCard'
 
 //Styled Home
@@ -100,8 +99,6 @@ function Home(props){
 
     return(
         <StyledHome>
-
-            <NavBar />
 
             <div className='headerImage'>
                 <h1>Grandma's Secret Recipes</h1>

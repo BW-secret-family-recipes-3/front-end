@@ -1,7 +1,7 @@
 //Import dependencies
 import React from 'react';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUtensils } from '@fortawesome/free-solid-svg-icons'
 
@@ -53,9 +53,16 @@ const StyledNav = styled.nav`
 
 //NavBar Component
 export default function NavBar() {
+    const history = useHistory()
+
+    const clickHandler = () => {
+        console.log('click')
+        history.push('/')
+    }
+
     return (
         < StyledNav >
-            <FontAwesomeIcon icon={faUtensils} />
+            <FontAwesomeIcon icon={faUtensils} onClick={clickHandler}/>
             <nav>
                 <Link to='/user/login'>LOGIN</Link>
                 <span></span>
