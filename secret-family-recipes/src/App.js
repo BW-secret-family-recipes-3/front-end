@@ -9,7 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBarBasic';
 
 // app component
 function App() {

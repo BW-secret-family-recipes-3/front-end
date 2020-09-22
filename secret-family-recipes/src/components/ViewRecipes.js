@@ -5,31 +5,17 @@ import { connect } from "react-redux";
 // local imports
 import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
-// will move to login component 
-import { fetchTokenAction } from '../actions/fetchToken';
-import { registerUserAction } from '../actions/registerUser'
+import {getRecipesAction} from '../actions/getRecipes'
 
 function ViewRecipes(props){
 
-    const {recipes, credentials, auth} = props;
-    // will move to login component 
-    const handleClick = () => {
-        props.fetchTokenAction({username: 'user2', password: 'password2'});
-    };
+    const {getRecipesAction, tokenState, userState, getRecipes} = props;
+    console.log(props);
 
-    const tempUser = {
-        username: 'user2',
-        password: 'password2',
-        email: 'user2@user2.com',
-        name: 'USER2'
-    };
+    useEffect(() => {
+        getRecipesAction(tokenState.token, userState.userId)
+    },[getRecipes.needsUpdating])
 
-    const handleClickReg = () => {
-        props.registerUser(tempUser)
-    }
-
-
-   
     return (
         <div>
             <h2>View Recipes</h2>
@@ -40,28 +26,16 @@ function ViewRecipes(props){
                     return <Recipe key = {r.title} recipe = {r}/>
                 })} */}
             </div>
-            <div className = "temporaryLogInButton">
-                <button onClick = {e => {
-                    e.preventDefault();
-                    handleClick();
-                }}
-                >Temp Login
-                </button>
-                <button onClick = {e => {
-                    e.preventDefault();
-                    handleClickReg();
-                }}
-                >Temp Register
-                </button>
-            </div>
         </div>
     );
 };
 
 function mapStateToProps(state) {
     return {
-        state: state
+        userState: state.user,
+        tokenState: state.fetchToken,
+        getRecipes: state.getRecipes
     };
 };
 
-export default connect(mapStateToProps, {fetchTokenAction, registerUserAction})(ViewRecipes);
+export default connect(mapStateToProps, {getRecipesAction})(ViewRecipes);

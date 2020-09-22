@@ -41,9 +41,8 @@ export async function addRecipeReq(args) {
 
 // getRecipesReq
 
-export async function getRecipesReq(args){
-    const {token, userID} = args;
-    const URL = `https://secret-family-backend.herokuapp.com/api/users/${userID}/recipes`;
+export async function getRecipesReq(token, userId){
+    const URL = `https://secret-family-backend.herokuapp.com/api/users/${userId}/recipes`;
     const header = {Authorization: token};
 
     return await axios.get(URL, {headers: header});
