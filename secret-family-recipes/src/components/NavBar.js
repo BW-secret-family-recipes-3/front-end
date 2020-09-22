@@ -12,6 +12,7 @@ function NavBar(props){
         return (
             <div>
                 <Link to = "/user/dashboard">Dashboard</Link>
+                <Link to = "/user/logout">Logout</Link>
             </div>
         );
     };
