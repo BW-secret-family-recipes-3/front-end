@@ -43,6 +43,12 @@ const exampleRecipes = [{
     categories: ['everyday', 'breakfast', 'lunch', 'dinner']
 }];
 
+// Creating some styled components! 
+
+const RecipesContainer = styled.div`
+
+`
+
 
 
 function ViewRecipes(props){
