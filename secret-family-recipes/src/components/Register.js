@@ -20,9 +20,8 @@ const initialFormErrors = {
 function Register(props){
     // username, password REQUIRED
     // name, email OPTIONAL
-
+    const { registerUserAction } = props;
     const {inProgress, response, userToRegister, errors} = props.state; // global state passed in as props
-
     const createRegisterUserAction = (userObject) => {    // use this to submit your form values, you will find a response to your submission in the global state values
         return registerUserAction(userObject);            // userObject must have shape -> {username: <username>, password: <password>, email: <email>, name: <name> }
     }                                                     // if no email or name just submit an empty string
@@ -32,8 +31,14 @@ function Register(props){
     const [formErrors, setFormErrors] = useState(initialFormErrors)
 
     const onChange = (event) => {
+        event.preventDefault();
         const {name, value} = event.target
         setFormValues({...formValues, [name]: value})
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        return createRegisterUserAction(formValues);
     }
 
     return(
@@ -97,7 +102,7 @@ function Register(props){
 
                 {/* {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null} */}
 
-                <button>Submit</button>
+                <button onClick = {onSubmit}>Submit</button>
 
                 {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
 

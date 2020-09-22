@@ -38,12 +38,12 @@ const initialDisabled = true;
 
 function Login(props){
 
-    console.log(props.state);
+    // console.log(props.state);
 
     const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
 
     const createFetchTokenAction = (loginObject) => {  // use this to submit your login form
-        return fetchTokenAction(loginObject);          // loginObject must have shape: {username: <username>, password: <password>}
+        return props.fetchTokenAction(loginObject);          // loginObject must have shape: {username: <username>, password: <password>}
     }
 
     /// state
@@ -53,25 +53,19 @@ function Login(props){
     const [formValues, setFormValues] = useState(initialFormValues);
     const [errorValues, setErrorValues] = useState(initialErrorValues);
     const [disabled, setDisabled] = useState(initialDisabled);
-    const [users, setUsers] = useState([])
 
 
     /* Changing/validating form and error values on every key change*/
     const onChange = e => {
+        e.preventDefault();
         const {name, value} = e.target;
-        change(name, value);
-    };
-
-    const change = (name, value) => {
-        validate(name, value);
-        setFormValues({
-            ...formValues, [name]: value
-        })
+        validate(name, value)
+        setFormValues({...formValues, [name]: value})
     };
 
     const validate = (name, value) => {
         yup.reach(schema, name).validate(value)
-        .then(valid=>{
+        .then( () =>{
             setErrorValues({
                 ...errorValues, [name]: ''
             })
@@ -91,18 +85,15 @@ function Login(props){
     }, [formValues]);
 
     /*Submitting form */
-    const onSubmit = e => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        console.log(formValues);
+        return createFetchTokenAction(formValues);
     }
 
-
-
-    console.log(props)
     return(
         <Container>
             <h2>Login</h2>
-            <Form onSubmit={onSubmit}>
+            <Form >
                 <label htmlFor='username'>Username<br></br>
                     <input
                     type='text'
@@ -121,7 +112,7 @@ function Login(props){
                 </label>
                 <ErrorMessage>{errorValues.password}</ErrorMessage>
 
-                <button disabled={disabled}>LOG IN</button>
+                <button onClick = {onSubmit} disabled={disabled}>LOG IN</button>
             </Form>
             
         </Container>

@@ -15,9 +15,11 @@ export const fetchTokenAction = (credentials) => dispatch => {
     dispatch({type: FETCHING_TOKEN});
     makeLoginReq(credentials)
         .then(res => {
+            console.log(res);
             dispatch({type: FETCH_TOKEN_SUCCESS, payload: res});
         })
         .catch(err => {
+            console.log(err);
             dispatch({type: FETCH_TOKEN_ERROR, payload: err});
         });
 };
