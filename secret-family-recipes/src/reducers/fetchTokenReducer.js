@@ -17,7 +17,7 @@ function fetchTokenReducer(state = initialState, action){
         case FETCHING_TOKEN:
             return {...state, inProgress: true};
         case FETCH_TOKEN_SUCCESS:
-            return {...state, inProgress: false, response: payload};
+            return {...state, inProgress: false, loggedIn: true, token: payload.data.token, response: payload};
         case FETCH_TOKEN_ERROR:
             return {...state, inProgress: false, errors: payload};
         default:

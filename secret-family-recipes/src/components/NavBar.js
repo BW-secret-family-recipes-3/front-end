@@ -2,29 +2,41 @@ import React from 'react';
 import {BrowserRouter as Router, Link} from "react-router-dom";
 import { connect } from "react-redux";
 
-const loggedInLinks = () => {
-    return (
-        <div>
-            <Link to = "/user/dashboard">Dashboard</Link>
-        </div>
-    );
-};
 
-const loggedOutLinks = () => {
-    return (
-        <div>
-            <Link to = "/user/login">Login</Link>
-            <Link to = "/user/register">Register</Link>
-        </div>
-    );   
-};
 
 function NavBar(props){
+
+    const {loggedIn} = props.state;
+
+    const loggedInLinks = () => {
+        return (
+            <div>
+                <Link to = "/user/dashboard">Dashboard</Link>
+            </div>
+        );
+    };
+    
+    const loggedOutLinks = () => {
+        return (
+            <div>
+                <Link to = "/user/login">Login</Link>
+                <Link to = "/user/register">Register</Link>
+            </div>
+        );   
+    };
+
+
     return(
         <div>
-           {loggedOutLinks()}
+           {loggedIn ? loggedInLinks() : loggedOutLinks()}
         </div>
     );
 };
 
-export default NavBar;
+function mapStateToProps(state) {
+    return {
+        state: state.fetchToken
+    };
+};
+
+export default connect(mapStateToProps, {})(NavBar);
