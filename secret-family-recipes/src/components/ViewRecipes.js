@@ -82,7 +82,7 @@ function ViewRecipes(props){
     const NoRecipesToDisplay = () => {
         return(
             <div>
-                <p>no recipes added yet!</p>
+                <p>no recipes added yet!!</p>
             </div>
         );
     };
