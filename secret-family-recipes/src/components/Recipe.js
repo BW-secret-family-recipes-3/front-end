@@ -52,6 +52,11 @@ function Recipe(props){
                             <span key = {idx}>{cat}</span>
                         )
                     })}
+            <div className = "buttons-container">
+                <button>Delete Recipe</button>
+                <button>Edit Recipe</button>
+            </div>
+            
             </>
             }
         </StyledRecipe>
