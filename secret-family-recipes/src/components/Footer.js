@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { connect } from "react-redux";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGithub} from '@fortawesome/free-brands-svg-icons/faGithub';
@@ -86,7 +86,13 @@ nav {
 
 function Footer(props){
 
-    const {loggedIn} = props.state;
+    const loggedIn = localStorage.getItem('token') ? true : false;
+    const history = useHistory()
+
+    const logOutHandler = () => {
+        localStorage.removeItem('token');
+        history.push('/')
+    }
 
     const loggedInLinks = () => {
         return (
@@ -95,7 +101,7 @@ function Footer(props){
                 <p>SECRET FAMILY RECIPES</p>
                 <nav>
                     <Link to = "/user/dashboard">Dashboard</Link>
-                    <Link to = "/user/logout">Logout</Link>
+                    <Link onClick = {logOutHandler}>Logout</Link>
                     <a href='https://github.com/BW-secret-family-recipes-3' target='_blank'>
                         GitHub {githubIcon}</a>
                 </nav>
