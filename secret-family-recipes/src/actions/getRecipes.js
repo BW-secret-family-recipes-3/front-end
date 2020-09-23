@@ -4,9 +4,9 @@ const GETTING_RECIPES = "GETTING_RECIPES";
 const GET_RECIPES_SUCCESS = "GET_RECIPES_SUCCESS";
 const GET_RECIPES_ERROR = "GET_RECIPES_ERROR";
 
-export const getRecipesAction = (token) => dispatch => {
+export const getRecipesAction = (token, userId) => dispatch => {
     dispatch({type: GETTING_RECIPES});
-    getRecipesReq(token)
+    getRecipesReq(token, userId)
         .then(res => {
             dispatch({type: GET_RECIPES_SUCCESS, payload: res});
         })

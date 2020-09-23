@@ -7,6 +7,7 @@ const initialState = {
     userRecipes: [],
     response: {},
     errors: {},
+    needsUpdating: false
 };
 
 function getRecipesReducer(state = initialState, action){
@@ -15,7 +16,7 @@ function getRecipesReducer(state = initialState, action){
         case GETTING_RECIPES:
             return {...state, inProgress: true};
         case GET_RECIPES_SUCCESS:
-            return {...state, inProgress: false, response: payload};
+            return {...state, inProgress: false, userRecipes: payload.data, response: payload};
         case GET_RECIPES_ERROR:
             return {...state, inProgress: false, errors: payload};
         default:

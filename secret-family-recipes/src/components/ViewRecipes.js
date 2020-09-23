@@ -7,9 +7,7 @@ import styled from 'styled-components';
 // local imports
 import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
-// will move to login component 
-import { fetchTokenAction } from '../actions/fetchToken';
-import { registerUserAction } from '../actions/registerUser';
+import {getRecipesAction} from '../actions/getRecipes';
 
 
 
@@ -50,31 +48,42 @@ const RecipesContainer = styled.div`
 `
 
 
-
 function ViewRecipes(props){
 
-    const {recipes, credentials, auth} = props;
-    // will move to login component 
-    const handleClick = () => {
-        props.fetchTokenAction({username: 'user2', password: 'password2'});
+    // destructuring prpos
+    const {getRecipesAction, tokenState, userState, getRecipes} = props;
+    console.log(props);
+
+    // fetching recipes
+    useEffect(() => {
+        getRecipesAction(tokenState.token, userState.userId)
+    },[getRecipes.needsUpdating])
+
+    // if there are recipes in the array...
+    const RecipesToDisplay = () => {
+        return (
+            <div>
+                 <SearchRecipes/>
+                {getRecipes.userRecipes.map(r => {
+                    return <Recipe recipe = {r}/>
+                })}
+            </div>
+        );
     };
 
-    const tempUser = {
-        username: 'user2',
-        password: 'password2',
-        email: 'user2@user2.com',
-        name: 'USER2'
+    // if no recipes in the array...
+    const NoRecipesToDisplay = () => {
+        return(
+            <div>
+                <p>no recipes added yet!</p>
+            </div>
+        );
     };
-
-    const handleClickReg = () => {
-        props.registerUser(tempUser)
-    }
-
-
-   
+    
     return (
         <div>
             <h2>View Recipes</h2>
+
             <div>
                 {exampleRecipes.map(rec=>{
                     return (
@@ -85,23 +94,7 @@ function ViewRecipes(props){
             <SearchRecipes/>
             {/* ViewRecipes component goes here*/}
             <div className = "recipesContainer">
-                {/* {recipes.map(r => {
-                    return <Recipe key = {r.title} recipe = {r}/>
-                })} */}
-            </div>
-            <div className = "temporaryLogInButton">
-                <button onClick = {e => {
-                    e.preventDefault();
-                    handleClick();
-                }}
-                >Temp Login
-                </button>
-                <button onClick = {e => {
-                    e.preventDefault();
-                    handleClickReg();
-                }}
-                >Temp Register
-                </button>
+                {getRecipes.userRecipes.length ? RecipesToDisplay() : NoRecipesToDisplay()}
             </div>
         </div>
     );
@@ -109,8 +102,10 @@ function ViewRecipes(props){
 
 function mapStateToProps(state) {
     return {
-        state: state
+        userState: state.user,
+        tokenState: state.fetchToken,
+        getRecipes: state.getRecipes
     };
 };
 
-export default connect(mapStateToProps, {fetchTokenAction, registerUserAction})(ViewRecipes);
+export default connect(mapStateToProps, {getRecipesAction})(ViewRecipes);

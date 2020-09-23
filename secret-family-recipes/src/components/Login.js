@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from "react-redux";
-import axios from 'axios';
 import * as yup from 'yup';
 import schema from '../validation/Login_formSchema';
 import styled from 'styled-components';
@@ -37,8 +36,6 @@ const initialDisabled = true;
 
 
 function Login(props){
-
-    console.log(props.state);
 
     const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
 

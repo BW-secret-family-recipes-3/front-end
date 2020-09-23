@@ -15,7 +15,7 @@ function getUserReducer(state = initialState, action){
         case GETTING_USER:
             return {...state, inProgress: true};
         case GET_USER_SUCCESS:
-            return {...state, inProgress: false, response: payload};
+            return {...state, inProgress: false, userId: payload.data[0].id, response: payload};
         case GET_USER_ERROR:
             return {...state, inProgress: false, errors: payload};
         default:
