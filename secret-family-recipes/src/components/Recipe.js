@@ -15,11 +15,19 @@ const StyledRecipeEditing = styled.div`
     div {
         margin: 2% 0;
         display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
     }
 
     label {
         font-family: 'Amatic SC', cursive;
+        font-weight: bold;
+        font-size: 3rem;
+    }
+
+    label.small {
+        font-size: 2rem;
     }
 `
 
@@ -32,6 +40,23 @@ function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
     const {recipe, deleteRecipe} = props;
+
+    //Form State
+    const [staticState, setStaticState] = useState({
+        title: '',
+        source: ''
+    })
+
+    const blankIngredient = {measurement: '', ingredient: ''};
+    const [ingredientsState, setIngredientsState] = useState(recipe.ingredients);
+
+    const ingredientChange = (event) => {
+        const newIngredient = {
+            [event.target.name]: event.target.value
+        }
+        setIngredientsState([...ingredientsState, newIngredient])
+    }
+
     
     const toggleDisabled = e => {
         e.stopPropagation()
@@ -49,9 +74,18 @@ function Recipe(props){
         setIsEditing(true)
     }
 
+    const changeHandler = (event) => {
+        const {name, value} = event.target
+        setStaticState({...staticState, [name]:value})
+    }
+
     const cancelHandler = (event) => {
         event.preventDefault()
         setIsEditing(false)
+        setStaticState({
+            title: '',
+            source: ''
+        })
     }
 
     const staticRecipe = () => {
@@ -104,45 +138,49 @@ function Recipe(props){
             <form>
 
             <div>
-            <p>Title: {recipe.recipe.title}</p>
-            <label>Title
+            <label>Title 
             <input 
                 type='text'
                 name='title'
-                onChange={() => {}}
+                value={staticState.title}
+                placeholder={recipe.recipe.title}
+                onChange={changeHandler}
             />
             </label>
             </div>
             
             <div>
-            <p>Source: {recipe.recipe.source}</p>
             <label>Source
             <input 
                 type='text'
                 name='source'
-                onChange={() => {}}
+                value={staticState.source}
+                placeholder={recipe.recipe.source}
+                onChange={changeHandler}
             />
             </label>
             </div>
             
             <div>
-            <label>Ingredients:
+            <label>Ingredients:</label>
             <ul>
                 {recipe.ingredients.map((ing, idx) =>{
                         return (
                             <li key = {idx}>
-                                <label>Name: {ing.name}
+                                <label className='small'>Name:
                                     <input
                                         type='text'
                                         name='ingredient-name'
-                                        onChange={() => {}}
+                                        placeholder={ing.name}
+                                        onChange={ingredientChange}
                                     />
                                 </label>
-                                <label>Measurement: {ing.measurement}
+                                <label className='small'>Measurement:
                                     <input
                                         type='text'
                                         name='ingredient-measurement'
-                                        onChange={() => {}}
+                                        placeholder={ing.measurement}
+                                        onChange={ingredientChange}
                                     />
                                 </label>
                             </li>
@@ -150,25 +188,18 @@ function Recipe(props){
                     })}
             </ul>
             <button>Add Ingredient</button>
-            </label>
             </div>
             
             <div>
-            <label>Instructions:
+            <label>Instructions:</label>
                 {recipe.instructions.map((ins) => {
                         return( 
                         <li key = {ins.step_number}>
-                            <label>Step: {ins.step_number + 1}
+                            <label className='small'>Step: {ins.step_number + 1}
                                 <input
                                     type='text'
-                                    name='instruction-step'
-                                    onChange={() => {}}
-                                />
-                            </label>
-                            <label>Description: {ins.step_description}
-                                <input
-                                    type='text'
-                                    name='instruction-step'
+                                    name='instruction-description'
+                                    placeholder={ins.step_description}
                                     onChange={() => {}}
                                 />
                             </label>
@@ -177,25 +208,24 @@ function Recipe(props){
                     })
                 }
             <button>Add a Step</button>
-            </label>
             </div>
             
             <div>
-            <label>Categories:
+            <label>Categories:</label>
                 {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
-                            <label>{cat}
+                            <label className='small'>
                                 <input
                                 key = {idx}
                                 type='text'
                                 name='category'
+                                placeholder={cat}
                                 onChange={() => {}}
                                 />
                             </label> 
                         )
                     })
                 }
-            </label>
             </div>
             </form>
 
