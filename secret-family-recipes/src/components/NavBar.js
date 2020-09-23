@@ -63,11 +63,12 @@ const StyledNav = styled.div`
 //NavBar Component
 function NavBar(props) {
 
-    const {loggedIn} = props.state 
+    const loggedIn = localStorage.getItem('token') ? true : false;
 
     const history = useHistory()
 
     const clickHandler = () => {
+        localStorage.removeItem('token');
         history.push('/')
     }
 
