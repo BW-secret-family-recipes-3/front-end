@@ -23,6 +23,13 @@ const initialFormErrors = {
     password: '',
 }
 
+const initialFieldChecks = {
+    name: false,
+    email: false,
+    username: false,
+    password: false,
+}
+
 //Styled Form
 const StyledForm = styled.form`
     display: flex;
@@ -81,7 +88,8 @@ function Register(props){
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     const [usernameError, setUsernameError] = useState(null)
     const [missingFields, setMissingFields] = useState(false)
-    const [buttonColor, setButtonColor] = useState()
+    const [buttonColor, setButtonColor] = useState(false)
+    const [fieldChecks, setFieldChecks] = useState(initialFieldChecks)
 
     //Helper Functions
     const createRegisterUserAction = (userObject) => {
@@ -127,9 +135,11 @@ function Register(props){
           .validate(value)
           .then(() => {
             setFormErrors({...formErrors, [name]: ''})
+            setFieldChecks({...fieldChecks, [name]: true})
           })
           .catch(error => {
             setFormErrors({...formErrors, [name]: error.errors[0]})
+            setFieldChecks({...fieldChecks, [name]: false})
           })
       }
 
@@ -169,6 +179,8 @@ function Register(props){
                 
                 {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
+                {fieldChecks.name ? <span style={{color: 'green'}}>✔︎</span> : null}
+
                 <label>EMAIL</label>
                 <input
                     type='email'
@@ -179,6 +191,8 @@ function Register(props){
                 />
                 
                 {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
+
+                {fieldChecks.email ? <span style={{color: 'green'}}>✔︎</span> : null}
 
                 <label>USERNAME<span style={{color: 'red'}}>*</span></label>
                 <input
@@ -191,6 +205,8 @@ function Register(props){
                 
                 {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
 
+                {fieldChecks.username ? <span style={{color: 'green'}}>✔︎</span> : null}
+
                 <label>PASSWORD<span style={{color: 'red'}}>*</span></label>
                 <input
                     type='password'
@@ -201,6 +217,8 @@ function Register(props){
                 />
 
                 {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
+
+                {fieldChecks.password ? <span style={{color: 'green'}}>✔︎</span> : null}
 
                 {/* Submit Button */}
                 <button onClick={onSubmit}>SUBMIT</button>
