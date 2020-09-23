@@ -112,7 +112,6 @@ function Register(props){
                     submitHelper()
                     setFormValues(initialFormValues)
                     setMissingFields(false)
-                    setFieldChecks({...initialFieldChecks, registered: true})
                 }
                 else {
                     setMissingFields(true)
@@ -154,6 +153,12 @@ function Register(props){
             setUsernameError(errors.response.data.message)
         }
     }, [errors.response])
+
+    useEffect(() => {
+        if(response.statusText === 'Created') {
+            setFieldChecks({...initialFieldChecks, registered: true})
+        }
+    }, [response])
 
     useEffect(() => {
         schema.isValid(formValues)
@@ -232,7 +237,7 @@ function Register(props){
                 <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> 
                 : null}
 
-                { fieldChecks.registered && !usernameError ?
+                { fieldChecks.registered ?
                 <p>You're all set! Click <span style={{color: 'dodgerblue', textDecoration: 'underline'}} onClick={() => {history.push('/user/login')}}>here</span> to login.</p> 
                 : null}
 
