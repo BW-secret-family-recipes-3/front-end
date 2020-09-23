@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
-
+import {connect} from 'react-redux';
+import {addRecipeAction} from '../actions/addRecipe'
 import {DynamicInputs, DynamicInput} from './DynamicInputs';
 
 function AddRecipe(props){
 
     // dynamic state and handlers
 
-    const blankIngredient = {name: '', measurement: ''};
+    const blankIngredient = {measurement: '', ingredient: ''};
     const [ingredientsState, setIngredientsState] = useState([
         {...blankIngredient}
     ]);
 
-    const blankInstruction = {step: -1, description: ''};
-    const [instructionsState, setInstructionsState] = useState([
-        {...blankInstruction}
-    ]);
+    const [instructionsState, setInstructionsState] = useState(['']);
 
     const [categoriesState, setCategoriesState] = useState(['']);
 
@@ -23,7 +21,7 @@ function AddRecipe(props){
     };
 
     const addInstruction = () => {
-        setInstructionsState([...instructionsState, {...blankInstruction}]);
+        setInstructionsState([...instructionsState, '']);
     };
 
     const addCategory = () => {
@@ -38,13 +36,13 @@ function AddRecipe(props){
 
     const handleInstructionsChange = (e) => {
         const updatedInstructions = [...instructionsState];
-        updatedInstructions[e.target.dataset.idx][e.target.className] = e.target.value;
+        updatedInstructions[e.target.dataset.idx] = e.target.value;
         setInstructionsState(updatedInstructions);
     }
 
     const handleCategoryChange = (e) => {
         const updatedCategories = [...categoriesState];
-        updatedCategories[e.target.dataset.idx][e.target.className] = e.target.value;
+        updatedCategories[e.target.dataset.idx] = e.target.value;
         setCategoriesState(updatedCategories);
     }
 
@@ -61,14 +59,42 @@ function AddRecipe(props){
         [e.target.name]: [e.target.value]
     });
 
-    // add recipe submit
+ 
+    // recipe object formatter
+    const recipeFormat = () => {
+        const tempRecipeObj = {
+            title: staticState.title,
+            user_id: props.user.userId,
+            instructions: instructionsState.map((ins, idx) => {
+                return {
+                    user_id: props.user.userId,
+                    step_number: idx,
+                    step_description: ins
+                }
+            }),
+            ingredients: ingredientsState.map((ing) => {
+                return {
+                    name: ing.ingredient,
+                    measurement: ing.measurement
+                }
+            }),
+            category: categoriesState.join(),
+            source: staticState.source
+        };
+        return tempRecipeObj;
+    }
 
+    // add recipe submit
+    const submitHandler = (e) => {
+        e.preventDefault();
+        props.addRecipeAction({recipe: recipeFormat(), token: props.fetchToken.token});
+    }
     // jsx
 
     return(
         <div>
             <h3>Add Recipe</h3>
-            <form>
+            <form onSubmit = {submitHandler}>
                 <div className = "static-inputs">
                     <label htmlFor="title">Title</label>   
                     <input type="text" name="title" id="title" value = {staticState.title} onChange = {handleStaticChange}/> 
@@ -94,13 +120,12 @@ function AddRecipe(props){
                         <h4>Instructions</h4>
                         <input type="button" value="Add New Instruction" onClick={addInstruction} />  
                         {instructionsState.map((val, idx) => {
-                            return <DynamicInputs
+                            return <DynamicInput
                                     key = {idx}
                                     idx = {idx}
                                     dynamicState = {instructionsState}
                                     handleDynamicChange = {handleInstructionsChange}
-                                    field1 = "step"
-                                    field2 = "description"
+                                    field = "step"
                                     />
                         })}
                     </div>
@@ -124,4 +149,12 @@ function AddRecipe(props){
     )
 }
 
-export default AddRecipe;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        fetchToken: state.fetchToken,
+        addRecipe: state.addRecipe
+    };
+};
+
+export default connect(mapStateToProps, {addRecipeAction})(AddRecipe);
