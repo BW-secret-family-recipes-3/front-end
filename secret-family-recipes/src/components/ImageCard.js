@@ -30,7 +30,7 @@ export default function ImageCard(props) {
     return (
         <StyledImage url={image}>
             <div className='textContainer'>
-                <h2>{title}</h2>
+                <h3>{title}</h3>
             </div>
         </StyledImage>
     )

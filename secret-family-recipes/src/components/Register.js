@@ -30,6 +30,45 @@ const StyledForm = styled.form`
     justify-content: center;
     align-items: center;
     border: 1px solid black;
+
+    label, input, button, p, h2 {
+        margin: 1.5% 0;
+    }
+
+    input {
+        border: 2px solid slategray;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+            border-color: darkorange;
+        }
+
+        &:hover {
+            border-color: darkorange;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    button {
+        border: 2px solid ${pr => pr.buttonColor ? 'red' : 'green'};
+        background-color: white;
+        color: ${pr => pr.buttonColor ? 'red' : 'green'};
+        border-radius: 8px;
+        padding: 1%;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            transition: all 0.3s ease-in-out;
+            font-weight: bold;
+            border-width: 3px;
+        }
+     }
 `
 
 function Register(props){
@@ -40,8 +79,9 @@ function Register(props){
     //State
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
-    const [missingFields, setMissingFields] = useState(false)
     const [usernameError, setUsernameError] = useState(null)
+    const [missingFields, setMissingFields] = useState(false)
+    const [buttonColor, setButtonColor] = useState()
 
     //Helper Functions
     const createRegisterUserAction = (userObject) => {
@@ -59,10 +99,10 @@ function Register(props){
                 if (valid) {
                     submitHelper()
                     setFormValues(initialFormValues)
-                    setMissingFields(false)
+                    setMissingFields(!missingFields)
                 }
                 else {
-                    setMissingFields(true)
+                    setMissingFields(!missingFields)
                 }
             })
             .catch(() => {
@@ -73,7 +113,7 @@ function Register(props){
             })
     }
 
-    //
+    //Input Handler
     const onChange = (event) => {
         const {name, value} = event.target
         validateInput(name, value)
@@ -93,8 +133,8 @@ function Register(props){
           })
       }
 
-      //Use effects
-      useEffect(() => {
+    //Use effects
+    useEffect(() => {
         if (errors.response) {
             setUsernameError(errors.response.data.message)
         } else {
@@ -102,13 +142,23 @@ function Register(props){
         }
     }, [errors.response])
 
+    useEffect(() => {
+        schema.isValid(formValues)
+            .then(valid => {
+                setButtonColor(!valid)
+            })
+            .catch(() => {
+                debugger
+            })
+    }, [formValues])
+
     //Register Component
     return(
         <div>
-            <StyledForm>
+            <StyledForm buttonColor={buttonColor}>
                 <h2>Register</h2>
 
-                <label>Your Name</label>
+                <label>NAME</label>
                 <input
                     type='text'
                     name='name'
@@ -119,7 +169,7 @@ function Register(props){
                 
                 {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
-                <label>Email</label>
+                <label>EMAIL</label>
                 <input
                     type='email'
                     name='email'
@@ -130,7 +180,7 @@ function Register(props){
                 
                 {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
 
-                <label>Username<span style={{color: 'red'}}>*</span></label>
+                <label>USERNAME<span style={{color: 'red'}}>*</span></label>
                 <input
                     type='text'
                     name='username'
@@ -141,7 +191,7 @@ function Register(props){
                 
                 {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
 
-                <label>Password<span style={{color: 'red'}}>*</span></label>
+                <label>PASSWORD<span style={{color: 'red'}}>*</span></label>
                 <input
                     type='password'
                     name='password'
@@ -152,11 +202,14 @@ function Register(props){
 
                 {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
-                <button onClick = {onSubmit}>Submit</button>
+                {/* Submit Button */}
+                <button onClick={onSubmit}>SUBMIT</button>
 
                 {usernameError ? <p style={{color: 'red'}} id='submit-error'>{usernameError}</p> : null}
-                
-                { missingFields ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null}
+
+                { missingFields ?
+                <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> 
+                : null}
 
             </StyledForm>
            
