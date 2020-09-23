@@ -4,9 +4,9 @@ const DELETING_RECIPE = "DELETING_RECIPE";
 const DELETE_RECIPE_SUCCESS = "DELETE_RECIPE_SUCCESS";
 const DELETE_RECIPE_ERROR = "DELETE_RECIPE_ERROR";
 
-export const deleteRecipeAction = ({token, recipeID}) => dispatch => {
+export const deleteRecipeAction = (args) => dispatch => {
     dispatch({type: DELETING_RECIPE});
-    deleteRecipeReq({token, recipeID})
+    deleteRecipeReq(args)
         .then(res => {
             console.log(res);
             dispatch({type: DELETE_RECIPE_SUCCESS, payload: res});

@@ -15,7 +15,6 @@ width: 40%;
 function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
     const {recipe, deleteRecipe} = props;
-    console.log(recipe);
     
     const toggleDisabled = e => {
         !collapsed ? setDisabled(true) : setDisabled(false);

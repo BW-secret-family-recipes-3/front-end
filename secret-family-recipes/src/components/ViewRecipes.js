@@ -61,8 +61,8 @@ function ViewRecipes(props){
 
     // delete recipe handler
 
-    const deleteRecipe = (recipeId) => {
-        props.deleteRecipeAction({token: tokenState.token , recipeId: recipeId});
+    const deleteRecipe = (rId) => {
+        props.deleteRecipeAction({token: tokenState.token , recipeId: rId});
         getRecipesAction(tokenState.token, userState.userId);
     }
 
