@@ -72,6 +72,10 @@ const StyledHome = styled.div`
             border-color: Darkorange;
             transition: all 0.3s ease-in-out;
         }
+
+        &:focus {
+            outline: none;
+        }
      }
 `
 
@@ -93,15 +97,15 @@ function Home(props){
         axiosCall()
     }
 
-    // useEffect(() => {
-    //     axiosCall()
-    // }, [])
+    useEffect(() => {
+        axiosCall()
+    }, [])
 
     return(
         <StyledHome>
 
             <div className='headerImage'>
-                <h1>Grandma's Secret Recipes</h1>
+                <h1>Secret Family Recipes</h1>
                 <Link to='/user/register'>GET STARTED</Link>
             </div>
 

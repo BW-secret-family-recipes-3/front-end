@@ -43,39 +43,41 @@ p {
 nav {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 
     svg {
         font-size: 3rem;
     }
 
     a:last-of-type {
-        text-shadow: 2px 1px 2px white;
+        
         transition: all 0.3s ease-in-out;
         justify-self: flex-start;
+        color: white;
+        text-shadow: 2px 1px 2px black;
         
         
         &:hover {
-            color: white;
-            text-shadow: 2px 1px 2px black;
+            text-shadow: 2px 1px 2px white;
+            color: black;
         }
     }
     
 
 
     a:nth-of-type(2), a:first-of-type {
-            color: black;
+            color: white;
             margin: 0 5%;
             text-decoration: none;
-            border: 2px solid black;
+            border: 2px solid white;
             border-radius: 8px;
             padding: 1.5% 1.5%;
             transition: all 0.3s ease-in-out;
-            background-color: white;
+            background-color: darkorange;
 
             &:hover {
-                color: darkorange;
-                border-color: white;
-                background-color: black;
+                color: black;
+                border-color: black;
                 transition: all 0.3s ease-in-out;
             }
     }
