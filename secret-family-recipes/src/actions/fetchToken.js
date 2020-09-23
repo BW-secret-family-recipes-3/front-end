@@ -11,7 +11,6 @@ const FETCH_TOKEN_ERROR = "FETCH_TOKEN_ERROR";
 // if not, dispatches errors to reducer to be added to redux state via payload
 
 export const fetchTokenAction = (credentials) => dispatch => {
-    console.log('in fetch token');
     dispatch({type: FETCHING_TOKEN});
     makeLoginReq(credentials)
         .then(res => {

@@ -51,19 +51,22 @@ const RecipesContainer = styled.div`
 
 function ViewRecipes(props){
 
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
     // destructuring prpos
     const {getRecipesAction, tokenState, userState, getRecipes} = props;
 
     // fetching recipes
     useEffect(() => {
-        getRecipesAction(tokenState.token, userState.userId)
+        getRecipesAction(token, userId)
     },[getRecipes.needsUpdating]);
 
     // delete recipe handler
 
     const deleteRecipe = (rId) => {
-        props.deleteRecipeAction({token: tokenState.token , recipeId: rId});
-        getRecipesAction(tokenState.token, userState.userId);
+        props.deleteRecipeAction({token: token , recipeId: rId});
+        getRecipesAction(token, userId);
     }
 
     // if there are recipes in the array...

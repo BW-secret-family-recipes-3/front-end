@@ -8,6 +8,7 @@ export const getUserAction = (token) => dispatch => {
     dispatch({type: GETTING_USER});
     getUserReq(token)
         .then(res => {
+            localStorage.setItem('userId', res.data[0].id)
             dispatch({type: GET_USER_SUCCESS, payload: res});
         })
         .catch(err => {

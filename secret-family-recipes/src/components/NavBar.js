@@ -67,7 +67,8 @@ function NavBar(props) {
 
     const history = useHistory()
 
-    const clickHandler = () => {
+    const clickHandler = (e) => {
+        e.preventDefault()
         localStorage.removeItem('token');
         history.push('/')
     }

@@ -5,6 +5,9 @@ import {DynamicInputs, DynamicInput} from './DynamicInputs';
 
 function AddRecipe(props){
 
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
     // dynamic state and handlers
 
     const blankIngredient = {measurement: '', ingredient: ''};
@@ -64,10 +67,10 @@ function AddRecipe(props){
     const recipeFormat = () => {
         const tempRecipeObj = {
             title: staticState.title,
-            user_id: props.user.userId,
+            user_id: userId,
             instructions: instructionsState.map((ins, idx) => {
                 return {
-                    user_id: props.user.userId,
+                    user_id: userId,
                     step_number: idx,
                     step_description: ins
                 }
@@ -87,7 +90,7 @@ function AddRecipe(props){
     // add recipe submit
     const submitHandler = (e) => {
         e.preventDefault();
-        props.addRecipeAction({recipe: recipeFormat(), token: props.fetchToken.token});
+        props.addRecipeAction({recipe: recipeFormat(), token: token});
     }
     // jsx
 
