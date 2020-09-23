@@ -51,27 +51,28 @@ const RecipesContainer = styled.div`
 
 function ViewRecipes(props){
 
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId')
     // destructuring prpos
-    const {getRecipesAction, tokenState, userState, getRecipes} = props;
+    
 
     // fetching recipes
     useEffect(() => {
-        getRecipesAction(tokenState.token, userState.userId)
-    },[getRecipes.needsUpdating]);
-
+        props.getRecipesAction(token, userId)
+    },[props.addRecipe.recipeAddToggle, props.editRecipe.recipeEditToggle, props.deleteRecipe.recipeDeleteToggle]);
+   
     // delete recipe handler
 
     const deleteRecipe = (rId) => {
-        props.deleteRecipeAction({token: tokenState.token , recipeId: rId});
-        getRecipesAction(tokenState.token, userState.userId);
+        props.deleteRecipeAction({token: token , recipeId: rId});
     }
 
     // if there are recipes in the array...
-    const RecipesToDisplay = () => {
+    const RecipesToDisplay = (props) => {
         return (
             <div>
                 <SearchRecipes/>
-                {getRecipes.userRecipes.map(r => {
+                {props.recipes.map(r => {
                     return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
                 })}
             </div>
@@ -91,7 +92,7 @@ function ViewRecipes(props){
         <div>
             <h2>View Recipes</h2>
             <div className = "recipesContainer">
-                {getRecipes.userRecipes.length ? RecipesToDisplay() : NoRecipesToDisplay()}
+                {props.getRecipes.userRecipes.length ? <RecipesToDisplay recipes = {props.getRecipes.userRecipes}/> : <NoRecipesToDisplay/>}
             </div>
         </div>
     );
@@ -101,7 +102,10 @@ function mapStateToProps(state) {
     return {
         userState: state.user,
         tokenState: state.fetchToken,
-        getRecipes: state.getRecipes
+        getRecipes: state.getRecipes,
+        addRecipe: state.addRecipe,
+        editRecipe: state.editRecipe,
+        deleteRecipe: state.deleteRecipe
     };
 };
 

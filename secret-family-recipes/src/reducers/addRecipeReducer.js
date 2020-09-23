@@ -7,6 +7,7 @@ const initialState = {
     recipeToAdd: '',
     errors: {},
     response: {},
+    recipeAddToggle: false
 };
 
 function addRecipeReducer(state = initialState, action){
@@ -15,9 +16,9 @@ function addRecipeReducer(state = initialState, action){
         case ADDING_RECIPE:
             return {...state, inProgress: true};
         case ADD_RECIPE_SUCCESS:
-            return {...state, inProgress: false, response: payload};
+            return {...state, inProgress: false, response: payload, recipeAddToggle: !state.recipeAddToggle};
         case ADD_RECIPE_ERROR:
-            return {...state, inProgress: false, errors: payload};
+            return {...state, inProgress: false, errors: payload, recipeAddToggle: !state.recipeAddToggle};
         default:
             return state;
     };

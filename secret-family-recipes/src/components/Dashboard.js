@@ -12,11 +12,12 @@ import {getUserAction} from '../actions/getUser'
 
 function Dashboard(props){
 
-    console.log(props.tokenState);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        props.getUserAction({token: props.tokenState.token});
-    },[props.tokenState.token])
+        props.getUserAction({token: token});
+        localStorage.setItem('userId', props.userState.userId)
+    },[props.userState.userId])
     
     return(
         <div>
