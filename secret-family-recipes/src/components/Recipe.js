@@ -16,11 +16,11 @@ function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
     const {recipe} = props;
     console.log(recipe);
-
     
     const toggleDisabled = e => {
         !collapsed ? setDisabled(true) : setDisabled(false);
     }
+
     return(
         <StyledRecipe onClick={toggleDisabled}>
             <h4>Recipe</h4>
@@ -47,6 +47,11 @@ function Recipe(props){
                         )
                     })}
             <h5>Categories:</h5>
+                    {recipe.recipe.category.split(',').map((cat, idx)=> {
+                        return(
+                            <span key = {idx}>{cat}</span>
+                        )
+                    })}
             </>
             }
         </StyledRecipe>
