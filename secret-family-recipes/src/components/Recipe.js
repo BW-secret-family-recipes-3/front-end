@@ -47,17 +47,52 @@ function Recipe(props){
         source: ''
     })
 
-    const blankIngredient = {measurement: '', ingredient: ''};
+    const blankIngredient = {measurement: '', name: ''};
     const [ingredientsState, setIngredientsState] = useState(recipe.ingredients);
 
-    const ingredientChange = (event) => {
-        const newIngredient = {
-            [event.target.name]: event.target.value
-        }
-        setIngredientsState([...ingredientsState, newIngredient])
+    const blankInstruction = {
+        step_number: -1,
+        step_description: '',
+        step_id: recipe.recipe.id
     }
 
-    
+    const [instructionsState, setInstructions] = useState(recipe.instructions)
+
+    const [categoriesState, setCategories] = useState(recipe.recipe.category.split(','))
+
+    const ingredientChange = (e) => {
+    const updatedIngredients = [...ingredientsState];
+       updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
+       setIngredientsState(updatedIngredients);
+    }
+
+    const addIngredient = (e) => {
+        e.preventDefault()
+        setIngredientsState([...ingredientsState, blankIngredient])
+    }
+
+    const instructionsChange = (e) => {
+        const updatedInstructions = [...instructionsState];
+       updatedInstructions[e.target.dataset.idx][e.target.name] = e.target.value;
+       setInstructions(updatedInstructions);
+    }
+
+    const addInstruction = (e) => {
+        e.preventDefault()
+        setInstructions([...instructionsState, blankInstruction])
+    }
+
+    const categoryChange = (e) => {
+        const updatedCategory = [...categoriesState];
+       updatedCategory[e.target.dataset.idx] = e.target.value;
+       setCategories(updatedCategory)
+    }
+
+    const addCategory = (e) => {
+        e.preventDefault()
+        setCategories([...categoriesState, ''])
+    }
+
     const toggleDisabled = e => {
         e.stopPropagation()
         !collapsed ? setDisabled(true) : setDisabled(false);
@@ -164,22 +199,26 @@ function Recipe(props){
             <div>
             <label>Ingredients:</label>
             <ul>
-                {recipe.ingredients.map((ing, idx) =>{
+                {ingredientsState.map((ing, idx) =>{
                         return (
                             <li key = {idx}>
                                 <label className='small'>Name:
                                     <input
                                         type='text'
-                                        name='ingredient-name'
+                                        name='name'
                                         placeholder={ing.name}
+                                        data-idx={idx}
+                                        value={ingredientsState[idx].name}
                                         onChange={ingredientChange}
                                     />
                                 </label>
                                 <label className='small'>Measurement:
                                     <input
                                         type='text'
-                                        name='ingredient-measurement'
+                                        name='measurement'
                                         placeholder={ing.measurement}
+                                        data-idx={idx}
+                                        value={ingredientsState[idx].measurement}
                                         onChange={ingredientChange}
                                     />
                                 </label>
@@ -187,46 +226,52 @@ function Recipe(props){
                         )
                     })}
             </ul>
-            <button>Add Ingredient</button>
+            <button onClick={addIngredient}>Add Ingredient</button>
             </div>
             
             <div>
             <label>Instructions:</label>
-                {recipe.instructions.map((ins) => {
+                {instructionsState.map((ins, idx) => {
                         return( 
-                        <li key = {ins.step_number}>
-                            <label className='small'>Step: {ins.step_number + 1}
+                        <li key = {idx}>
+                            <label className='small'>Step: {idx + 1}
                                 <input
                                     type='text'
-                                    name='instruction-description'
+                                    name='step_description'
+                                    data-idx={idx}
+                                    value={instructionsState[idx].step_description}
                                     placeholder={ins.step_description}
-                                    onChange={() => {}}
+                                    onChange={instructionsChange}
                                 />
                             </label>
                         </li>
                         )
                     })
                 }
-            <button>Add a Step</button>
+            <button onClick={addInstruction}>Add a Step</button>
             </div>
             
             <div>
             <label>Categories:</label>
-                {recipe.recipe.category.split(',').map((cat, idx)=> {
+                {categoriesState.map((cat, idx)=> {
                         return(
                             <label className='small'>
                                 <input
                                 key = {idx}
                                 type='text'
                                 name='category'
+                                data-idx={idx}
                                 placeholder={cat}
-                                onChange={() => {}}
+                                value={categoriesState[idx]}
+                                onChange={categoryChange}
                                 />
                             </label> 
                         )
                     })
                 }
+                <button onClick={addCategory}>Add Category</button>
             </div>
+            
             </form>
 
             <div className = "buttons-container">
