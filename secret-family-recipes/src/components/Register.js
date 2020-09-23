@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as yup from 'yup'
 import schema from '../validation/Register_formSchema'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 
 //Import actions
 import {registerUserAction} from '../actions/registerUser';
@@ -28,6 +29,7 @@ const initialFieldChecks = {
     email: false,
     username: false,
     password: false,
+    registered: false,
 }
 
 //Styled Form
@@ -36,7 +38,7 @@ const StyledForm = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    margin:10% 0;
 
     label, input, button, p, h2 {
         margin: 1.5% 0;
@@ -82,6 +84,8 @@ function Register(props){
     //Props
     const { registerUserAction } = props;
     const {inProgress, response, userToRegister, errors} = props.state;
+
+    const history = useHistory()
     
     //State
     const [formValues, setFormValues] = useState(initialFormValues)
@@ -107,10 +111,11 @@ function Register(props){
                 if (valid) {
                     submitHelper()
                     setFormValues(initialFormValues)
-                    setMissingFields(!missingFields)
+                    setMissingFields(false)
+                    setFieldChecks({...initialFieldChecks, registered: true})
                 }
                 else {
-                    setMissingFields(!missingFields)
+                    setMissingFields(true)
                 }
             })
             .catch(() => {
@@ -147,8 +152,6 @@ function Register(props){
     useEffect(() => {
         if (errors.response) {
             setUsernameError(errors.response.data.message)
-        } else {
-            return
         }
     }, [errors.response])
 
@@ -227,6 +230,10 @@ function Register(props){
 
                 { missingFields ?
                 <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> 
+                : null}
+
+                { fieldChecks.registered && !usernameError ?
+                <p>You're all set! Click <span style={{color: 'dodgerblue', textDecoration: 'underline'}} onClick={() => {history.push('/user/login')}}>here</span> to login.</p> 
                 : null}
 
             </StyledForm>
