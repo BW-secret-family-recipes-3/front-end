@@ -31,8 +31,7 @@ function ViewRecipes(props){
 
     // fetching recipes
     useEffect(() => {
-
-        getRecipesAction(token, userId)
+        props.getRecipesAction(token, userId)
     },[props.editRecipe.toggle, props.deleteRecipe.toggle, props.addRecipe.toggle]);
 
 
@@ -40,7 +39,6 @@ function ViewRecipes(props){
 
     const deleteRecipe = (rId) => {
         props.deleteRecipeAction({token: token , recipeId: rId});
-        getRecipesAction(token, userId);
     }
 
     // if there are recipes in the array...
