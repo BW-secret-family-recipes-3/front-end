@@ -14,11 +14,16 @@ width: 40%;
 
 function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
-    const {recipe} = props;
+    const {recipe, deleteRecipe} = props;
     console.log(recipe);
     
     const toggleDisabled = e => {
         !collapsed ? setDisabled(true) : setDisabled(false);
+    }
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        deleteRecipe(recipe.recipe.id);
     }
 
     return(
@@ -53,10 +58,9 @@ function Recipe(props){
                         )
                     })}
             <div className = "buttons-container">
-                <button>Delete Recipe</button>
+                <button onClick = {handleDelete}>Delete Recipe</button>
                 <button>Edit Recipe</button>
             </div>
-            
             </>
             }
         </StyledRecipe>

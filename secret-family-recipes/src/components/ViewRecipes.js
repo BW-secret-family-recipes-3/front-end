@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
 import {getRecipesAction} from '../actions/getRecipes';
+import {deleteRecipeAction} from '../actions/deleteRecipe';
 
 
 
@@ -56,7 +57,14 @@ function ViewRecipes(props){
     // fetching recipes
     useEffect(() => {
         getRecipesAction(tokenState.token, userState.userId)
-    },[getRecipes.needsUpdating])
+    },[getRecipes.needsUpdating]);
+
+    // delete recipe handler
+
+    const deleteRecipe = (recipeId) => {
+        props.deleteRecipeAction({token: tokenState.token , recipeId: recipeId});
+        getRecipesAction(tokenState.token, userState.userId);
+    }
 
     // if there are recipes in the array...
     const RecipesToDisplay = () => {
@@ -64,7 +72,7 @@ function ViewRecipes(props){
             <div>
                 <SearchRecipes/>
                 {getRecipes.userRecipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
                 })}
             </div>
         );
@@ -97,4 +105,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, {getRecipesAction})(ViewRecipes);
+export default connect(mapStateToProps, {getRecipesAction, deleteRecipeAction})(ViewRecipes);
