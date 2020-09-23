@@ -15,6 +15,7 @@ width: 40%;
 function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
     const {recipe} = props;
+    console.log(recipe);
 
     
     const toggleDisabled = e => {
@@ -23,20 +24,30 @@ function Recipe(props){
     return(
         <StyledRecipe onClick={toggleDisabled}>
             <h4>Recipe</h4>
-            {/* Recipe component goes here*/}
-            <p>Title: {recipe.title}</p>
+            <p>Title: {recipe.recipe.title}</p>
             { !collapsed && <>
-            <p>Source: {recipe.source}</p>
-            <p>Ingredients: 
+            <p>Source: {recipe.recipe.source}</p>
+            <h5>Ingredients: 
                 <ul>
-                    {recipe.ingredients.map(ing=>{
+                    {recipe.ingredients.map((ing, idx) =>{
                         return (
-                            <li>{ing}</li>
+                            <li key = {idx}>
+                                <span>Name: {ing.name}</span>
+                                <span>Measurement: {ing.measurement}</span>
+                            </li>
                         )
                     })}
-                </ul></p>
-            <p>Instructions: {recipe.instructions}</p>
-            <p>Categories: {recipe.categories}</p></>
+                </ul></h5>
+            <h5>Instructions:</h5>
+                    {recipe.instructions.map((ins) => {
+                        return( <li key = {ins.step_number}>
+                            <span>Step: {ins.step_number + 1}</span>
+                            <span>Description: {ins.step_description}</span>
+                        </li>
+                        )
+                    })}
+            <h5>Categories:</h5>
+            </>
             }
         </StyledRecipe>
     );

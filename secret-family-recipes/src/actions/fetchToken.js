@@ -16,6 +16,7 @@ export const fetchTokenAction = (credentials) => dispatch => {
     makeLoginReq(credentials)
         .then(res => {
             console.log(res);
+            localStorage.setItem('token', res.data.token); 
             dispatch({type: FETCH_TOKEN_SUCCESS, payload: res});
         })
         .catch(err => {

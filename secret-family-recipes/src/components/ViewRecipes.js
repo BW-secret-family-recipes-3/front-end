@@ -52,7 +52,6 @@ function ViewRecipes(props){
 
     // destructuring prpos
     const {getRecipesAction, tokenState, userState, getRecipes} = props;
-    console.log(props);
 
     // fetching recipes
     useEffect(() => {
@@ -63,9 +62,9 @@ function ViewRecipes(props){
     const RecipesToDisplay = () => {
         return (
             <div>
-                 <SearchRecipes/>
+                <SearchRecipes/>
                 {getRecipes.userRecipes.map(r => {
-                    return <Recipe recipe = {r}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r}/>
                 })}
             </div>
         );
@@ -83,16 +82,6 @@ function ViewRecipes(props){
     return (
         <div>
             <h2>View Recipes</h2>
-
-            <div>
-                {exampleRecipes.map(rec=>{
-                    return (
-                        <Recipe recipe={rec}/>
-                    )
-                })}
-            </div>
-            <SearchRecipes/>
-            {/* ViewRecipes component goes here*/}
             <div className = "recipesContainer">
                 {getRecipes.userRecipes.length ? RecipesToDisplay() : NoRecipesToDisplay()}
             </div>
