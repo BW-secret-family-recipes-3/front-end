@@ -75,10 +75,18 @@ h1 {
 }
 
 h2 {
+	font-size: 4rem;
+}
+
+h3 {
 	font-size: 3rem;
 }
 
 button {
 	font-family: 'Roboto', sans-serif;
 	font-size: 1.6rem;
+}
+
+label {
+	font-family: 'Roboto', sans-serif;
 }
