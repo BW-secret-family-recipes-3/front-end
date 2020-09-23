@@ -1,10 +1,14 @@
+//Import dependencies
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import * as yup from 'yup'
 import schema from '../validation/Register_formSchema'
+import styled from 'styled-components'
 
+//Import actions
 import {registerUserAction} from '../actions/registerUser';
 
+//Initial state values
 const initialFormValues = {
     name: '',
     email: '',
@@ -19,123 +23,213 @@ const initialFormErrors = {
     password: '',
 }
 
+const initialFieldChecks = {
+    name: false,
+    email: false,
+    username: false,
+    password: false,
+}
+
+//Styled Form
+const StyledForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+
+    label, input, button, p, h2 {
+        margin: 1.5% 0;
+    }
+
+    input {
+        border: 2px solid slategray;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+            border-color: darkorange;
+        }
+
+        &:hover {
+            border-color: darkorange;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    button {
+        border: 2px solid ${pr => pr.buttonColor ? 'red' : 'green'};
+        background-color: white;
+        color: ${pr => pr.buttonColor ? 'red' : 'green'};
+        border-radius: 8px;
+        padding: 1%;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            transition: all 0.3s ease-in-out;
+            font-weight: bold;
+            border-width: 3px;
+        }
+     }
+`
+
 function Register(props){
-    // username, password REQUIRED
-    // name, email OPTIONAL
+    //Props
     const { registerUserAction } = props;
-    const {inProgress, response, userToRegister, errors} = props.state; // global state passed in as props
-    const createRegisterUserAction = (userObject) => {    // use this to submit your form values, you will find a response to your submission in the global state values
-        return registerUserAction(userObject);            // userObject must have shape -> {username: <username>, password: <password>, email: <email>, name: <name> }
-    }                                                     // if no email or name just submit an empty string
-
-
+    const {inProgress, response, userToRegister, errors} = props.state;
+    
+    //State
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
-    const [disabled, setDisabled] = useState(true)
+    const [usernameError, setUsernameError] = useState(null)
+    const [missingFields, setMissingFields] = useState(false)
+    const [buttonColor, setButtonColor] = useState(false)
+    const [fieldChecks, setFieldChecks] = useState(initialFieldChecks)
 
+    //Helper Functions
+    const createRegisterUserAction = (userObject) => {
+        return registerUserAction(userObject);
+    }
+
+    const submitHelper = () => {
+        return createRegisterUserAction(formValues);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        schema.isValid(formValues)
+            .then((valid) => {
+                if (valid) {
+                    submitHelper()
+                    setFormValues(initialFormValues)
+                    setMissingFields(!missingFields)
+                }
+                else {
+                    setMissingFields(!missingFields)
+                }
+            })
+            .catch(() => {
+                debugger
+            })
+            .finally(() => {
+                setUsernameError(null)
+            })
+    }
+
+    //Input Handler
     const onChange = (event) => {
-        event.preventDefault();
         const {name, value} = event.target
         validateInput(name, value)
         setFormValues({...formValues, [name]: value})
     }
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        return createRegisterUserAction(formValues);
-    }
-
+    //Input validator
     const validateInput = (name, value) => {
         yup
           .reach(schema, name)
           .validate(value)
           .then(() => {
             setFormErrors({...formErrors, [name]: ''})
+            setFieldChecks({...fieldChecks, [name]: true})
           })
           .catch(error => {
             setFormErrors({...formErrors, [name]: error.errors[0]})
+            setFieldChecks({...fieldChecks, [name]: false})
           })
       }
 
-      useEffect(() => {
+    //Use effects
+    useEffect(() => {
+        if (errors.response) {
+            setUsernameError(errors.response.data.message)
+        } else {
+            return
+        }
+    }, [errors.response])
+
+    useEffect(() => {
         schema.isValid(formValues)
             .then(valid => {
-                setDisabled(!valid)
+                setButtonColor(!valid)
             })
             .catch(() => {
                 debugger
             })
-      },[formValues])
+    }, [formValues])
 
+    //Register Component
     return(
         <div>
-            <h2>Register</h2>
+            <StyledForm buttonColor={buttonColor}>
+                <h2>Register</h2>
 
-
-            <form>
-
-                <label>
-                    Your Name
-                    <input 
-                        type='text'
-                        name='name'
-                        value={formValues.name}
-                        placeholder='Name'
-                        onChange={onChange}
-                        id='name-input'
-                    />
-                </label>
-
+                <label>NAME</label>
+                <input
+                    type='text'
+                    name='name'
+                    value={formValues.name}
+                    onChange={onChange}
+                    id='name-input'
+                />
+                
                 {formErrors.name ? <p style={{color: 'red'}} id='name-error'>{formErrors.name}</p> : null}
 
-                <label>
-                    Email
-                    <input 
-                        type='email'
-                        name='email'
-                        value={formValues.email}
-                        placeholder='email'
-                        onChange={onChange}
-                        id='email-input'
-                    />
-                </label>
+                {fieldChecks.name ? <span style={{color: 'green'}}>✔︎</span> : null}
 
+                <label>EMAIL</label>
+                <input
+                    type='email'
+                    name='email'
+                    value={formValues.email}
+                    onChange={onChange}
+                    id='email-input'
+                />
+                
                 {formErrors.email ? <p style={{color: 'red'}} id='email-error'>{formErrors.email}</p> : null}
 
-                <label>
-                    Choose a username*
-                    <input 
-                        type='text'
-                        name='username'
-                        value={formValues.username}
-                        placeholder='username'
-                        onChange={onChange}
-                        id='username-input'
-                    />
-                </label>
+                {fieldChecks.email ? <span style={{color: 'green'}}>✔︎</span> : null}
 
+                <label>USERNAME<span style={{color: 'red'}}>*</span></label>
+                <input
+                    type='text'
+                    name='username'
+                    value={formValues.username}
+                    onChange={onChange}
+                    id='username-input'
+                />
+                
                 {formErrors.username ? <p style={{color: 'red'}} id='name-error'>{formErrors.username}</p> : null}
 
-                <label>
-                    Password*
-                    <input 
-                        type='password'
-                        name='password'
-                        value={formValues.password}
-                        placeholder='password'
-                        onChange={onChange}
-                        id='password-input'
-                    />
-                </label>
+                {fieldChecks.username ? <span style={{color: 'green'}}>✔︎</span> : null}
+
+                <label>PASSWORD<span style={{color: 'red'}}>*</span></label>
+                <input
+                    type='password'
+                    name='password'
+                    value={formValues.password}
+                    onChange={onChange}
+                    id='password-input'
+                />
 
                 {formErrors.password ? <p style={{color: 'red'}} id='password-error'>{formErrors.password}</p> : null}
 
-                <button onClick = {onSubmit}>Submit</button>
+                {fieldChecks.password ? <span style={{color: 'green'}}>✔︎</span> : null}
 
+                {/* Submit Button */}
+                <button onClick={onSubmit}>SUBMIT</button>
 
-                {/* { disabled ? <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> : null} */}
+                {usernameError ? <p style={{color: 'red'}} id='submit-error'>{usernameError}</p> : null}
 
-            </form>
+                { missingFields ?
+                <p style={{color: 'red'}} id='submit-error'>Some fields are missing or incomplete</p> 
+                : null}
+
+            </StyledForm>
            
         </div>
     );

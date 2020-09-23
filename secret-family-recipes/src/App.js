@@ -9,13 +9,13 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/NavBarBasic';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 // app component
 function App() {
   return (
     <div className="App">
-      <h1>Secrete Family Recipes</h1>
       <Router>
         <NavBar/>
         <Switch>
@@ -26,6 +26,7 @@ function App() {
           {/* ------------- React-2 team ---------------- */}
           <PrivateRoute path = "/user/dashboard" component = {Dashboard}/>
         </Switch>
+        <Footer />
       </Router>
     </div>
   );
