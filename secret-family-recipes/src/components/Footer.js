@@ -89,7 +89,8 @@ function Footer(props){
     const loggedIn = localStorage.getItem('token') ? true : false;
     const history = useHistory()
 
-    const logOutHandler = () => {
+    const logOutHandler = (e) => {
+        e.preventDefault();
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         history.push('/')

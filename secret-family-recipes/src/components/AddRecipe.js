@@ -7,6 +7,7 @@ function AddRecipe(props){
 
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
+
     // dynamic state and handlers
 
     const blankIngredient = {measurement: '', ingredient: ''};

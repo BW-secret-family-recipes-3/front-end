@@ -14,10 +14,11 @@ function Dashboard(props){
 
     const token = localStorage.getItem('token');
 
+    const userId = localStorage.getItem('userId');
+
     useEffect(() => {
         props.getUserAction({token: token});
-        localStorage.setItem('userId', props.userState.userId)
-    },[props.userState.userId])
+    },[token])
     
     return(
         <div>
