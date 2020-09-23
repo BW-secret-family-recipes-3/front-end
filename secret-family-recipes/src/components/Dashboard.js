@@ -16,9 +16,11 @@ function Dashboard(props){
 
     const userId = localStorage.getItem('userId');
 
+    const {getUserAction} = props;
+
     useEffect(() => {
-        props.getUserAction({token: token});
-    },[token])
+        getUserAction({token: token});
+    },[token, getUserAction])
     
     return(
         <div>

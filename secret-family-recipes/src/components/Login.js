@@ -85,8 +85,10 @@ function Login(props){
     const onSubmit = (e) => {
         e.preventDefault();
         createFetchTokenAction(formValues);
-        props.history.push('/user/dashboard')
-    }
+        if (loggedIn){
+            return props.history.push('/user/dashboard');
+        };
+    };
 
     return(
         <Container>

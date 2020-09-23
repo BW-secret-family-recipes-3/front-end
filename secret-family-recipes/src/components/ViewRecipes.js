@@ -30,14 +30,16 @@ function ViewRecipes(props){
     
 
     // fetching recipes
+
+    const {getRecipesAction, editRecipe, deleteRecipe, addRecipe} = props;
     useEffect(() => {
-        props.getRecipesAction(token, userId)
-    },[props.editRecipe.toggle, props.deleteRecipe.toggle, props.addRecipe.toggle]);
+        getRecipesAction(token, userId)
+    },[editRecipe.toggle, deleteRecipe.toggle, addRecipe.toggle, getRecipesAction, token, userId]);
 
 
     // delete recipe handler
 
-    const deleteRecipe = (rId) => {
+    const createDeleteRecipe = (rId) => {
         props.deleteRecipeAction({token: token , recipeId: rId});
     }
 
@@ -47,7 +49,7 @@ function ViewRecipes(props){
             <div>
                 <SearchRecipes/>
                 {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {createDeleteRecipe}/>
                 })}
             </div>
         );
