@@ -6,7 +6,8 @@ const initialState = {
     inProgress: false,
     recipeToDelete: {},
     response: {},
-    errors: {}
+    errors: {},
+    toggle: false
 };
 
 function deleteRecipeReducer(state = initialState, action){
@@ -15,9 +16,9 @@ function deleteRecipeReducer(state = initialState, action){
         case DELETING_RECIPE:
             return {...state, inProgress: true};
         case DELETE_RECIPE_SUCCESS:
-            return {...state, inProgress: false, recipeToDelete: {}, response: payload};
+            return {...state, inProgress: false, recipeToDelete: {}, response: payload, toggle: !state.toggle};
         case DELETE_RECIPE_ERROR:
-            return {...state, inProgress: false, errors: payload};
+            return {...state, inProgress: false, errors: payload, toggle: !state.toggle};
         default:
             return state;
     };
