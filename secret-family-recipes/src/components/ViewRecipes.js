@@ -22,15 +22,19 @@ const RecipesContainer = styled.div`
 function ViewRecipes(props){
 
     const token = localStorage.getItem('token');
+
     const userId = localStorage.getItem('userId');
 
+
     // destructuring prpos
-    const {getRecipesAction, tokenState, userState, getRecipes} = props;
+    
 
     // fetching recipes
     useEffect(() => {
+
         getRecipesAction(token, userId)
     },[props.editRecipe.toggle, props.deleteRecipe.toggle, props.addRecipe.toggle]);
+
 
     // delete recipe handler
 
@@ -40,11 +44,11 @@ function ViewRecipes(props){
     }
 
     // if there are recipes in the array...
-    const RecipesToDisplay = () => {
+    const RecipesToDisplay = (props) => {
         return (
             <div>
                 <SearchRecipes/>
-                {getRecipes.userRecipes.map(r => {
+                {props.recipes.map(r => {
                     return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
                 })}
             </div>
@@ -64,7 +68,7 @@ function ViewRecipes(props){
         <div>
             <h2>View Recipes</h2>
             <div className = "recipesContainer">
-                {getRecipes.userRecipes.length ? RecipesToDisplay() : NoRecipesToDisplay()}
+                {props.getRecipes.userRecipes.length ? <RecipesToDisplay recipes = {props.getRecipes.userRecipes}/> : <NoRecipesToDisplay/>}
             </div>
         </div>
     );
@@ -78,6 +82,7 @@ function mapStateToProps(state) {
         editRecipe: state.editRecipe,
         deleteRecipe: state.deleteRecipe,
         addRecipe: state.addRecipe
+
 
     };
 };

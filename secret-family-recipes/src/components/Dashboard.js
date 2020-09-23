@@ -13,6 +13,7 @@ import {getUserAction} from '../actions/getUser'
 function Dashboard(props){
 
     const token = localStorage.getItem('token');
+
     const userId = localStorage.getItem('userId');
 
     useEffect(() => {

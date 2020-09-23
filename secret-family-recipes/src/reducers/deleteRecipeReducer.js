@@ -8,6 +8,7 @@ const initialState = {
     response: {},
     errors: {},
     toggle: false
+
 };
 
 function deleteRecipeReducer(state = initialState, action){

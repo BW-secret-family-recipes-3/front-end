@@ -8,6 +8,7 @@ const initialState = {
     errors: {},
     response: {},
     toggle: false
+
 };
 
 function addRecipeReducer(state = initialState, action){

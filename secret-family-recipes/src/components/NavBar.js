@@ -70,6 +70,7 @@ function NavBar(props) {
     const clickHandler = (e) => {
         e.preventDefault()
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         history.push('/')
     }
 

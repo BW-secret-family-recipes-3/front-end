@@ -92,6 +92,7 @@ function Footer(props){
     const logOutHandler = (e) => {
         e.preventDefault();
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         history.push('/')
     }
 

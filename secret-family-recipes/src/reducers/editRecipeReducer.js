@@ -9,6 +9,7 @@ const initialState = {
     errors: {},
     response: {},
     toggle: false
+
 };
 
 
