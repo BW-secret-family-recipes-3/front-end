@@ -7,7 +7,8 @@ const initialState = {
     recipeToEdit: {},
     editedRecipe: {},
     errors: {},
-    response: {}
+    response: {},
+    recipeEditToggle: false
 };
 
 
@@ -17,9 +18,9 @@ function editRecipeReducer(state = initialState, action){
         case EDITING_RECIPE:
             return {...state, inProgress: true};
         case EDIT_RECIPE_SUCCESS:
-            return {...state, inProgress: false, recipeToEdit: {}, editedRecipe: {}, response: payload};
+            return {...state, inProgress: false, recipeToEdit: {}, editedRecipe: {}, response: payload, recipeEditToggle: !state.recipeEditToggle};
         case EDIT_RECIPE_ERROR:
-            return {...state, inProgress: false, errors: payload};
+            return {...state, inProgress: false, errors: payload, recipeEditToggle: !state.recipeEditToggle};
         default:
             return state;
     };
