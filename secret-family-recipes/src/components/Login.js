@@ -14,11 +14,58 @@ const Container = styled.div`
     text-align: center;
 `
 
+// const Form = styled.form`
+//     border: solid black 2px;
+//     width: 35%;
+//     margin: auto;
+//     padding: 2% 0;
+// `
+
 const Form = styled.form`
-    border: solid black 2px;
-    width: 35%;
-    margin: auto;
-    padding: 2% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10% 0;
+
+    label, input, button, p, h2 {
+        margin: 1.5% 0;
+    }
+
+    input {
+        border: 2px solid slategray;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+            border-color: darkorange;
+        }
+
+        &:hover {
+            border-color: darkorange;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    button {
+        border: 2px solid ${pr => pr.disabled ? 'red' : 'green'};
+        background-color: white;
+        color: ${pr => pr.disabled ? 'red' : 'green'};
+        border-radius: 8px;
+        padding: 1%;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            transition: all 0.3s ease-in-out;
+            font-weight: bold;
+            border-width: 3px;
+        }
+     }
 `
 
 const initialFormValues = {
@@ -90,24 +137,22 @@ function Login(props){
 
     return(
         <Container>
-            <h2>Login</h2>
-            <Form >
-                <label htmlFor='username'>Username<br></br>
+            <Form disabled={disabled}>
+                <h2>Login</h2>
+                <label htmlFor='username'>USERNAME<span style={{color: 'red'}}>*</span></label>
                     <input
                     type='text'
                     name='username'
                     value={formValues.username}
                     onChange={onChange} />
-                </label>
                 <ErrorMessage>{errorValues.username}</ErrorMessage>
 
-                <label htmlFor='password'>Password<br></br>
+                <label htmlFor='password'>PASSWORD<span style={{color: 'red'}}>*</span></label>
                     <input
                     type='password'
                     name='password'
                     value={formValues.password}
                     onChange={onChange} />
-                </label>
                 <ErrorMessage>{errorValues.password}</ErrorMessage>
 
                 <button onClick = {onSubmit} disabled={disabled}>LOG IN</button>

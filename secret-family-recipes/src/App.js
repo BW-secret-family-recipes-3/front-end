@@ -17,6 +17,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <div className='content'>
         <NavBar/>
         <Switch>
           {/* ------------- React-1 team ---------------- */}
@@ -26,6 +27,7 @@ function App() {
           {/* ------------- React-2 team ---------------- */}
           <PrivateRoute path = "/user/dashboard" component = {Dashboard}/>
         </Switch>
+        </div>
         <Footer />
       </Router>
     </div>

@@ -99,7 +99,7 @@ function Footer(props){
 
     const loggedInLinks = () => {
         return (
-            <StyledFooter>
+            <StyledFooter className='footer'>
                 <FontAwesomeIcon icon={faUtensils} />
                 <p>SECRET FAMILY RECIPES</p>
                 <nav>
@@ -114,7 +114,7 @@ function Footer(props){
     
     const loggedOutLinks = () => {
         return (
-            <StyledFooter>
+            <StyledFooter className='footer'>
                 <div>
                 <FontAwesomeIcon icon={faUtensils} />
                 <p>SECRET FAMILY RECIPES</p>
@@ -131,9 +131,8 @@ function Footer(props){
 
 
     return(
-        <div>
-           {loggedIn ? loggedInLinks() : loggedOutLinks()}
-        </div>
+        
+           loggedIn ? loggedInLinks() : loggedOutLinks()
     );
 };
 

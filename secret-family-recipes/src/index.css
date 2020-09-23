@@ -57,6 +57,10 @@ table {
   max-width: 100%;
 }
 
+html, body, #root, .App {
+	height: 100%;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -64,6 +68,19 @@ html {
 body {
   font-size: 1.6rem;
   font-family: 'Roboto', sans-serif;
+}
+
+.App {
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	flex: 1 0 auto;
+}
+
+footer {
+	flex-shrink: 0;
 }
 
 h1, h2, h3, h4 {
