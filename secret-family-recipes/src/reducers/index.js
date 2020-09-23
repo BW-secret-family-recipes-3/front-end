@@ -6,6 +6,7 @@ import getRecipesReducers from './getRecipesReducer';
 import editRecipeReducer from './editRecipeReducer';
 import deleteRecipeReducer from './deleteRecipeReducer';
 import getUserReducer from './getUserReducer';
+import logoutReducer from './logoutReducer';
 
 
 const rootReducer = combineReducers(
@@ -16,7 +17,8 @@ const rootReducer = combineReducers(
         getRecipes: getRecipesReducers,
         editRecipe: editRecipeReducer,
         deleteRecipe: deleteRecipeReducer,
-        user: getUserReducer
+        user: getUserReducer,
+        logout: logoutReducer
     });
 
 export default rootReducer;
