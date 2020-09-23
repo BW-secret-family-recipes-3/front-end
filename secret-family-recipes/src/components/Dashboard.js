@@ -22,7 +22,7 @@ function Dashboard(props){
     
     return(
         <div>
-            <h2>Dashboard</h2>
+            <h2>Dashboard!</h2>
             
             {/* Dashboard component goes here*/}
             <Router>
