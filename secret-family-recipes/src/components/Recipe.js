@@ -83,41 +83,101 @@ function Recipe(props){
     const editingRecipe = () => {
         return (
             <StyledRecipeEditing onClick={toggleDisabled}>
-            <h4>Recipe</h4>
+            <h4>Edit Recipe</h4>
+
+            <form>
+
             <p>Title: {recipe.recipe.title}</p>
-            { !collapsed && <>
+            <label>Title
+            <input 
+                type='text'
+                name='title'
+                onChange={() => {}}
+            />
+            </label>
+            
             <p>Source: {recipe.recipe.source}</p>
-            <h5>Ingredients: 
-                <ul>
-                    {recipe.ingredients.map((ing, idx) =>{
+            <label>Source
+            <input 
+                type='text'
+                name='source'
+                onChange={() => {}}
+            />
+            </label>
+
+            <label>Ingredients:
+            <ul>
+                {recipe.ingredients.map((ing, idx) =>{
                         return (
                             <li key = {idx}>
-                                <span>Name: {ing.name}</span>
-                                <span>Measurement: {ing.measurement}</span>
+                                <label>Name: {ing.name}
+                                    <input
+                                        type='text'
+                                        name='ingredient-name'
+                                        onChange={() => {}}
+                                    />
+                                </label>
+                                <label>Measurement: {ing.measurement}
+                                    <input
+                                        type='text'
+                                        name='ingredient-measurement'
+                                        onChange={() => {}}
+                                    />
+                                </label>
                             </li>
                         )
                     })}
-                </ul></h5>
-            <h5>Instructions:</h5>
-                    {recipe.instructions.map((ins) => {
-                        return( <li key = {ins.step_number}>
-                            <span>Step: {ins.step_number + 1}</span>
-                            <span>Description: {ins.step_description}</span>
+            </ul>
+            <button>Add Ingredient</button>
+            </label>
+
+            <label>Instructions:
+                {recipe.instructions.map((ins) => {
+                        return( 
+                        <li key = {ins.step_number}>
+                            <label>Step: {ins.step_number + 1}
+                                <input
+                                    type='text'
+                                    name='instruction-step'
+                                    onChange={() => {}}
+                                />
+                            </label>
+                            <label>Description: {ins.step_description}
+                                <input
+                                    type='text'
+                                    name='instruction-step'
+                                    onChange={() => {}}
+                                />
+                            </label>
                         </li>
                         )
-                    })}
-            <h5>Categories:</h5>
-                    {recipe.recipe.category.split(',').map((cat, idx)=> {
+                    })
+                }
+            <button>Add a Step</button>
+            </label>
+
+            <label>Categories:
+                {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
-                            <span key = {idx}>{cat}</span>
+                            <label>{cat}
+                                <input
+                                key = {idx}
+                                type='text'
+                                name='category'
+                                onChange={() => {}}
+                                />
+                            </label> 
                         )
-                    })}
+                    })
+                }
+            </label>
+
+            </form>
+
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
-                <button>Edit Recipe</button>
+                <button>Save</button>
             </div>
-            </>
-            }
         </StyledRecipeEditing>
         )
     }
