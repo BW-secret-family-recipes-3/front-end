@@ -21,6 +21,7 @@ const Container = styled.div`
 //     padding: 2% 0;
 // `
 
+//Added by Josh
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -67,6 +68,7 @@ const Form = styled.form`
         }
      }
 `
+//Added by Josh
 
 const initialFormValues = {
     username: '',
