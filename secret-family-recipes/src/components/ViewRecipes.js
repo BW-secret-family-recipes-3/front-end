@@ -80,8 +80,6 @@ function mapStateToProps(state) {
         editRecipe: state.editRecipe,
         deleteRecipe: state.deleteRecipe,
         addRecipe: state.addRecipe
-
-
     };
 };
 
