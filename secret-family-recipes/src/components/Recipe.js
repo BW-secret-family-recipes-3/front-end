@@ -8,9 +8,19 @@ text-align: center;
 `
 
 const StyledRecipeEditing = styled.div`
-border: solid black 2px;
-margin: 2% auto;
-text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+        margin: 2% 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    label {
+        font-family: 'Amatic SC', cursive;
+    }
 `
 
 const unorderedList = styled.ul`
@@ -34,8 +44,14 @@ function Recipe(props){
     }
 
     const editHandler = (event) => {
+        event.preventDefault()
         event.stopPropagation()
         setIsEditing(true)
+    }
+
+    const cancelHandler = (event) => {
+        event.preventDefault()
+        setIsEditing(false)
     }
 
     const staticRecipe = () => {
@@ -83,10 +99,11 @@ function Recipe(props){
     const editingRecipe = () => {
         return (
             <StyledRecipeEditing onClick={toggleDisabled}>
-            <h4>Edit Recipe</h4>
+            <h2>Edit Recipe</h2>
 
             <form>
 
+            <div>
             <p>Title: {recipe.recipe.title}</p>
             <label>Title
             <input 
@@ -95,7 +112,9 @@ function Recipe(props){
                 onChange={() => {}}
             />
             </label>
+            </div>
             
+            <div>
             <p>Source: {recipe.recipe.source}</p>
             <label>Source
             <input 
@@ -104,7 +123,9 @@ function Recipe(props){
                 onChange={() => {}}
             />
             </label>
-
+            </div>
+            
+            <div>
             <label>Ingredients:
             <ul>
                 {recipe.ingredients.map((ing, idx) =>{
@@ -130,7 +151,9 @@ function Recipe(props){
             </ul>
             <button>Add Ingredient</button>
             </label>
-
+            </div>
+            
+            <div>
             <label>Instructions:
                 {recipe.instructions.map((ins) => {
                         return( 
@@ -155,7 +178,9 @@ function Recipe(props){
                 }
             <button>Add a Step</button>
             </label>
-
+            </div>
+            
+            <div>
             <label>Categories:
                 {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
@@ -171,12 +196,13 @@ function Recipe(props){
                     })
                 }
             </label>
-
+            </div>
             </form>
 
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
                 <button>Save</button>
+                <button onClick={cancelHandler}>Cancel</button>
             </div>
         </StyledRecipeEditing>
         )
