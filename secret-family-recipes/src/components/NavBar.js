@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUtensils } from '@fortawesome/free-solid-svg-icons'
 
+import {logoutAction} from '../actions/logout'
+
 //Styled Component
 const StyledNav = styled.div`
     display: flex;
@@ -62,15 +64,13 @@ const StyledNav = styled.div`
 
 //NavBar Component
 function NavBar(props) {
-
     const loggedIn = localStorage.getItem('token') ? true : false;
 
     const history = useHistory()
 
     const clickHandler = (e) => {
         e.preventDefault()
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        props.logoutAction()
         history.push('/')
     }
 
@@ -108,9 +108,10 @@ function NavBar(props) {
 
 function mapStateToProps(state) {
     return {
-        state: state.fetchToken
+        fetchToken: state.fetchToken,
+        logout: state.logout
     }
 }
 
-export default connect(mapStateToProps, {})(NavBar)
+export default connect(mapStateToProps, {logoutAction})(NavBar)
     

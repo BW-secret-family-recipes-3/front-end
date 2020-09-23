@@ -7,6 +7,8 @@ import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import '../index.css';
 
+import {logoutAction} from '../actions/logout'
+
 const githubIcon = <FontAwesomeIcon icon={faGithub}/>
 
 
@@ -91,8 +93,7 @@ function Footer(props){
 
     const logOutHandler = (e) => {
         e.preventDefault();
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        props.logoutAction();
         history.push('/')
     }
 
@@ -138,8 +139,9 @@ function Footer(props){
 
 function mapStateToProps(state) {
     return {
-        state: state.fetchToken
+        state: state.fetchToken,
+        logout: state.logout
     };
 };
 
-export default connect(mapStateToProps, {})(Footer);
+export default connect(mapStateToProps, {logoutAction})(Footer);
