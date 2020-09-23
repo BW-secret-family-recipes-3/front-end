@@ -14,13 +14,17 @@ width: 40%;
 
 function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
-    const {recipe} = props;
-    console.log(recipe);
-
+    const {recipe, deleteRecipe} = props;
     
     const toggleDisabled = e => {
         !collapsed ? setDisabled(true) : setDisabled(false);
     }
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        deleteRecipe(recipe.recipe.id);
+    }
+
     return(
         <StyledRecipe onClick={toggleDisabled}>
             <h4>Recipe</h4>
@@ -47,6 +51,15 @@ function Recipe(props){
                         )
                     })}
             <h5>Categories:</h5>
+                    {recipe.recipe.category.split(',').map((cat, idx)=> {
+                        return(
+                            <span key = {idx}>{cat}</span>
+                        )
+                    })}
+            <div className = "buttons-container">
+                <button onClick = {handleDelete}>Delete Recipe</button>
+                <button>Edit Recipe</button>
+            </div>
             </>
             }
         </StyledRecipe>
