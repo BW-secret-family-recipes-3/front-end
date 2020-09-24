@@ -56,7 +56,7 @@ function DashboardHeader(props){
 
     return(
         <StyledHeader>
-            <h3>(Username)'s Recipe Collection</h3>
+            <h3>{/*USERNAME WILL GO HERE ->*/}(Username)'s Recipe Collection</h3>
                 <FlexContainer>
                     <Link to = "/user/dashboard/viewrecipes">View Recipes</Link>
                     <Link to = "/user/dashboard/addrecipe">Add Recipe</Link>
