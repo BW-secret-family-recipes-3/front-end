@@ -81,14 +81,14 @@ nav {
             color: white;
             margin: 0 5%;
             text-decoration: none;
-            border: 3px solid black;
+            border: 3px solid white;
             border-radius: 8px;
             padding: 1.5% 1.5%;
             transition: all 0.3s ease-in-out;
             background-color: darkorange;
 
             &:hover {
-                background-color: #ffecd8;
+                border-color: black;
                 color: black;
                 transition: all 0.3s ease-in-out;
             }
