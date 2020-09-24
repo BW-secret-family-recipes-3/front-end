@@ -21,8 +21,7 @@ function Dashboard(props){
     },[token])
     
     return(
-        <div>
-            <h2>Dashboard!</h2>
+        <div style={{textAlign: 'center'}}>
             
             {/* Dashboard component goes here*/}
             <Router>
