@@ -88,6 +88,14 @@ function Login(props){
 
     const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
 
+    // redirect if logged in
+    useEffect(() => {
+        if (loggedIn) {
+            props.history.push('/user/dashboard/viewrecipes');
+        };
+    }, [loggedIn])
+    
+
     const createFetchTokenAction = (loginObject) => {  // use this to submit your login form
         return props.fetchTokenAction(loginObject);          // loginObject must have shape: {username: <username>, password: <password>}
     }
@@ -134,8 +142,7 @@ function Login(props){
     const onSubmit = (e) => {
         e.preventDefault();
         createFetchTokenAction(formValues);
-        props.history.push('/user/dashboard')
-    }
+    };
 
     return(
         <Container>

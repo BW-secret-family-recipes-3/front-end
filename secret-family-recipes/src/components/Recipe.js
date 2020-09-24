@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { editRecipeAction } from '../actions/editRecipe';
 
 const StyledRecipeStatic = styled.div`
 /* border: solid black 2px; */
@@ -66,10 +67,70 @@ text-align: center;
 `
 
 function Recipe(props){
+
+    // destructure  props
+    const {recipe, deleteRecipe, editRecipe} = props;
+
+    // grab userId form localStorage
+
+    const userId = localStorage.getItem('userId');
+
+    // state hooks
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
-    const {recipe, deleteRecipe} = props;
     
+    // editing Form State
+    const [staticState, setStaticState] = useState({
+        title: recipe.recipe.title,
+        source: recipe.recipe.source
+    })
+
+    const blankIngredient = {measurement: '', name: ''};
+    const [ingredientsState, setIngredientsState] = useState(recipe.ingredients);
+
+    const blankInstruction = {
+        step_number: -1,
+        step_description: '',
+        step_id: recipe.recipe.id
+    }
+
+    const [instructionsState, setInstructions] = useState(recipe.instructions)
+
+    const [categoriesState, setCategories] = useState(recipe.recipe.category.split(','))
+
+    const ingredientChange = (e) => {
+    const updatedIngredients = [...ingredientsState];
+       updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
+       setIngredientsState(updatedIngredients);
+    }
+
+    const addIngredient = (e) => {
+        e.preventDefault()
+        setIngredientsState([...ingredientsState, blankIngredient])
+    }
+
+    const instructionsChange = (e) => {
+        const updatedInstructions = [...instructionsState];
+       updatedInstructions[e.target.dataset.idx][e.target.name] = e.target.value;
+       setInstructions(updatedInstructions);
+    }
+
+    const addInstruction = (e) => {
+        e.preventDefault()
+        setInstructions([...instructionsState, blankInstruction])
+    }
+
+    const categoryChange = (e) => {
+        const updatedCategory = [...categoriesState];
+       updatedCategory[e.target.dataset.idx] = e.target.value;
+       setCategories(updatedCategory)
+    }
+
+    const addCategory = (e) => {
+        e.preventDefault()
+        setCategories([...categoriesState, ''])
+    }
+
     const toggleDisabled = e => {
         e.stopPropagation()
         !collapsed ? setDisabled(true) : setDisabled(false);
@@ -83,6 +144,52 @@ function Recipe(props){
     const editHandler = (event) => {
         event.stopPropagation()
         setIsEditing(true)
+    }
+
+    const changeHandler = (event) => {
+        const {name, value} = event.target
+        setStaticState({...staticState, [name]:value})
+    }
+
+    const cancelHandler = (event) => {
+        event.preventDefault()
+        setIsEditing(false)
+        setStaticState({
+            title: '',
+            source: ''
+        })
+    }
+
+    // format recipe
+
+    const recipeFormat = () => {
+        const tempRecipeObj = {
+            title: staticState.title,
+            user_id: userId,
+            instructions: instructionsState.map((ins, idx) => {
+                return {
+                    user_id: userId,
+                    step_number: idx,
+                    step_description: ins.step_description
+                }
+            }),
+            ingredients: ingredientsState.map((ing) => {
+                return {
+                    name: ing.name,
+                    measurement: ing.measurement
+                }
+            }),
+            category: categoriesState.join(),
+            source: staticState.source
+        };
+        return tempRecipeObj;
+    }
+
+    // save handler
+
+    const saveHandler = (e) => {
+        e.preventDefault();
+        return editRecipe(recipeFormat(), recipe.recipe.id);
     }
 
     const staticRecipe = () => {
@@ -160,12 +267,23 @@ function Recipe(props){
             <h5>Categories:</h5>
                     {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
-                            <span key = {idx}>{cat}</span>
+                            <label key = {idx} className='small'>
+                                <input
+                                key = {idx}
+                                type='text'
+                                name='category'
+                                data-idx={idx}
+                                placeholder={cat}
+                                value={categoriesState[idx]}
+                                onChange={categoryChange}
+                                />
+                            </label> 
                         )
                     })}
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
-                <button>Edit Recipe</button>
+                <button onClick = {saveHandler}>Save</button>
+                <button onClick={cancelHandler}>Cancel</button>
             </div>
             </>
             }

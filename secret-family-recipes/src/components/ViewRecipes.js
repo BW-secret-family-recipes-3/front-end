@@ -9,6 +9,7 @@ import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
 import {getRecipesAction} from '../actions/getRecipes';
 import {deleteRecipeAction} from '../actions/deleteRecipe';
+import {editRecipeAction} from '../actions/editRecipe';
 
 
 
@@ -41,13 +42,19 @@ function ViewRecipes(props){
         props.deleteRecipeAction({token: token , recipeId: rId});
     }
 
+    // edit recipe handler
+
+    const editRecipe = (recipeObj, rId) => {
+        props.editRecipeAction({editedRecipe: recipeObj, token: token, recipeId: rId});
+    }
+
     // if there are recipes in the array...
     const RecipesToDisplay = (props) => {
         return (
             <div>
                 <SearchRecipes recipes={props.recipes}/>
                 {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
                 })}
             </div>
         );
@@ -83,4 +90,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, {getRecipesAction, deleteRecipeAction})(ViewRecipes);
+export default connect(mapStateToProps, {getRecipesAction, deleteRecipeAction, editRecipeAction})(ViewRecipes);
