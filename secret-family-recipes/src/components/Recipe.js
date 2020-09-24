@@ -102,24 +102,63 @@ const StyledRecipeEditing = styled.div`
     border-bottom: solid 2px slategray;
     padding: 2.5% 0;
     border-radius: 5px;
+    
+    form {
+        width: 100%;
+    }
 
     div {
         margin: 2% 0;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
 
+    li {
+        display: inline-block;
+        width: 100%;
+    }
+
     label {
         font-family: 'Amatic SC', cursive;
         font-weight: bold;
         font-size: 3rem;
+        margin: 2.5% 0;
     }
 
     label.small {
         font-size: 2rem;
     }
+
+    .small input {
+        margin: 0 1%;
+    }
+    
+    .buttons-container {
+        display: inline;
+    }
+
+    button {
+        margin: 2.5%;
+        border: 2px solid slategray;
+        background-color: #ffecd8;
+        color: slategray;
+        border-radius: 8px;
+        padding: 2.5%;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            color: Darkorange;
+            border-color: Darkorange;
+            transition: all 0.3s ease-in-out;
+        }
+
+        &:focus {
+            outline: none;
+        }
+     }
 `
 
 const unorderedList = styled.ul`
@@ -296,8 +335,8 @@ function Recipe(props){
                         )
                     })}
             <div className = "buttons-container">
-                <button onClick = {handleDelete}>Delete Recipe</button>
-                <button onClick={editHandler}>Edit Recipe</button>
+                <button onClick={editHandler}>Edit</button>
+                <button onClick = {handleDelete}>Delete</button>
             </div>
             </>
             }
@@ -313,7 +352,7 @@ function Recipe(props){
             <form>
 
             <div>
-            <label>Title 
+            <label>Title</label>
             <input 
                 type='text'
                 name='title'
@@ -321,11 +360,10 @@ function Recipe(props){
                 placeholder={recipe.recipe.title}
                 onChange={changeHandler}
             />
-            </label>
             </div>
             
             <div>
-            <label>Source
+            <label>Recipe Source</label>
             <input 
                 type='text'
                 name='source'
@@ -333,7 +371,6 @@ function Recipe(props){
                 placeholder={recipe.recipe.source}
                 onChange={changeHandler}
             />
-            </label>
             </div>
             
             <div>
@@ -374,7 +411,7 @@ function Recipe(props){
                 {instructionsState.map((ins, idx) => {
                         return( 
                         <li key = {idx}>
-                            <label className='small'>Step: {idx + 1}
+                            <label className='small'>Step {idx + 1}
                                 <input
                                     type='text'
                                     name='step_description'
@@ -388,7 +425,7 @@ function Recipe(props){
                         )
                     })
                 }
-            <button onClick={addInstruction}>Add a Step</button>
+            <button onClick={addInstruction}>Add Step</button>
             </div>
             
             <div>
@@ -415,7 +452,7 @@ function Recipe(props){
             </form>
 
             <div className = "buttons-container">
-                <button onClick = {handleDelete}>Delete Recipe</button>
+                <button onClick = {handleDelete}>Delete</button>
                 <button onClick = {saveHandler}>Save</button>
                 <button onClick={cancelHandler}>Cancel</button>
             </div>
