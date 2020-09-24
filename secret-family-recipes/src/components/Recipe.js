@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { editRecipeAction } from '../actions/editRecipe';
 
 const StyledRecipeStatic = styled.div`
 border: solid black 2px;
@@ -37,14 +38,23 @@ width: 40%;
 `
 
 function Recipe(props){
+
+    // destructure  props
+    const {recipe, deleteRecipe, editRecipe} = props;
+
+    // grab userId form localStorage
+
+    const userId = localStorage.getItem('userId');
+
+    // state hooks
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
-    const {recipe, deleteRecipe} = props;
+    
 
-    //Form State
+    // editing Form State
     const [staticState, setStaticState] = useState({
-        title: '',
-        source: ''
+        title: recipe.recipe.title,
+        source: recipe.recipe.source
     })
 
     const blankIngredient = {measurement: '', name: ''};
@@ -121,6 +131,38 @@ function Recipe(props){
             title: '',
             source: ''
         })
+    }
+
+    // format recipe
+
+    const recipeFormat = () => {
+        const tempRecipeObj = {
+            title: staticState.title,
+            user_id: userId,
+            instructions: instructionsState.map((ins, idx) => {
+                return {
+                    user_id: userId,
+                    step_number: idx,
+                    step_description: ins.step_description
+                }
+            }),
+            ingredients: ingredientsState.map((ing) => {
+                return {
+                    name: ing.name,
+                    measurement: ing.measurement
+                }
+            }),
+            category: categoriesState.join(),
+            source: staticState.source
+        };
+        return tempRecipeObj;
+    }
+
+    // save handler
+
+    const saveHandler = (e) => {
+        e.preventDefault();
+        return editRecipe(recipeFormat(), recipe.recipe.id);
     }
 
     const staticRecipe = () => {
@@ -255,7 +297,7 @@ function Recipe(props){
             <label>Categories:</label>
                 {categoriesState.map((cat, idx)=> {
                         return(
-                            <label className='small'>
+                            <label key = {idx} className='small'>
                                 <input
                                 key = {idx}
                                 type='text'
@@ -276,7 +318,7 @@ function Recipe(props){
 
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
-                <button>Save</button>
+                <button onClick = {saveHandler}>Save</button>
                 <button onClick={cancelHandler}>Cancel</button>
             </div>
         </StyledRecipeEditing>
