@@ -37,11 +37,18 @@ width: 40%;
 `
 
 function Recipe(props){
+
+    // token and userId from local storage
+
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    // state hooks
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
     const {recipe, deleteRecipe} = props;
 
-    //Form State
+    // editing Form State
     const [staticState, setStaticState] = useState({
         title: '',
         source: ''
@@ -121,6 +128,38 @@ function Recipe(props){
             title: '',
             source: ''
         })
+    }
+
+    // format recipe
+
+    const recipeFormat = () => {
+        const tempRecipeObj = {
+            title: staticState.title,
+            user_id: userId,
+            instructions: instructionsState.map((ins, idx) => {
+                return {
+                    user_id: userId,
+                    step_number: idx,
+                    step_description: ins.step_description
+                }
+            }),
+            ingredients: ingredientsState.map((ing) => {
+                return {
+                    name: ing.name,
+                    measurement: ing.measurement
+                }
+            }),
+            category: categoriesState.join(),
+            source: staticState.source
+        };
+        return tempRecipeObj;
+    }
+
+    // save handler
+
+    const saveHandler = (e) => {
+        e.preventDefault();
+        return console.log(recipeFormat());
     }
 
     const staticRecipe = () => {
@@ -276,7 +315,7 @@ function Recipe(props){
 
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
-                <button>Save</button>
+                <button onClick = {saveHandler}>Save</button>
                 <button onClick={cancelHandler}>Cancel</button>
             </div>
         </StyledRecipeEditing>

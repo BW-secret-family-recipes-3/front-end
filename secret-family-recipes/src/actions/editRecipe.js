@@ -4,7 +4,7 @@ const EDITING_RECIPE = "EDITING_RECIPE";
 const EDIT_RECIPE_SUCCESS = "EDIT_RECIPE_SUCCESS";
 const EDIT_RECIPE_ERROR = "EDIT_RECIPE_ERROR";
 
-export const addRecipeAction = ({editedRecipe, token, recipeID}) => dispatch => {
+export const editRecipeAction = ({editedRecipe, token, recipeID}) => dispatch => {
     dispatch({type: EDITING_RECIPE});
     editRecipeReq({editedRecipe, token, recipeID})
         .then(res => {

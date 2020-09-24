@@ -9,6 +9,7 @@ import SearchRecipes from './SearchRecipes';
 import Recipe from './Recipe';
 import {getRecipesAction} from '../actions/getRecipes';
 import {deleteRecipeAction} from '../actions/deleteRecipe';
+import {editRecipeAction} from '../actions/editRecipe';
 
 
 
@@ -47,7 +48,7 @@ function ViewRecipes(props){
             <div>
                 <SearchRecipes/>
                 {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipeAction}/>
                 })}
             </div>
         );
@@ -83,4 +84,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, {getRecipesAction, deleteRecipeAction})(ViewRecipes);
+export default connect(mapStateToProps, {getRecipesAction, deleteRecipeAction, editRecipeAction})(ViewRecipes);
