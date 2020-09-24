@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { editRecipeAction } from '../actions/editRecipe';
+
 
 const StyledRecipeStatic = styled.div`
 
@@ -200,9 +200,9 @@ function Recipe(props){
     const [categoriesState, setCategories] = useState(recipe.recipe.category.split(','))
 
     const ingredientChange = (e) => {
-    const updatedIngredients = [...ingredientsState];
-       updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
-       setIngredientsState(updatedIngredients);
+        const updatedIngredients = [...ingredientsState];
+        updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
+        setIngredientsState(updatedIngredients);
     }
 
     const addIngredient = (e) => {
@@ -257,9 +257,12 @@ function Recipe(props){
         event.preventDefault()
         setIsEditing(false)
         setStaticState({
-            title: '',
-            source: ''
+            title: recipe.recipe.title,
+            source: recipe.recipe.source
         })
+        setIngredientsState(recipe.ingredients)
+        setInstructions(recipe.instructions)
+        setCategories(recipe.recipe.category.split(','))
     }
 
     // format recipe

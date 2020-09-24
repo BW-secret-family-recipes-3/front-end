@@ -53,8 +53,8 @@ function ViewRecipes(props){
         return (
             <div>
                 <SearchRecipes/>
-                {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
+                {props.recipes.map((r, idx) => {
+                    return <Recipe key = {idx} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
                 })}
             </div>
         );
