@@ -68,7 +68,12 @@ function NavBar(props) {
 
     const history = useHistory()
 
-    const clickHandler = (e) => {
+    const clickHandlerHome = (e) => {
+        e.preventDefault()
+        history.push('/')
+    }
+
+    const clickHandlerLogout= (e) => {
         e.preventDefault()
         props.logoutAction()
         history.push('/')
@@ -79,7 +84,7 @@ function NavBar(props) {
             <nav>
                 <Link to = "/user/dashboard">DASHBOARD</Link>
                 <span></span>
-                <Link onClick={clickHandler}>LOGOUT</Link>
+                <Link onClick={clickHandlerLogout}>LOGOUT</Link>
             </nav>
         )
     }
@@ -96,7 +101,7 @@ function NavBar(props) {
 
     return (
         < StyledNav >
-            <FontAwesomeIcon icon={faUtensils} onClick={clickHandler}/>
+            <FontAwesomeIcon icon={faUtensils} onClick={clickHandlerHome}/>
                 {
                     loggedIn ?
                     loggedInLinks()
