@@ -3,38 +3,67 @@ import styled from 'styled-components';
 import { editRecipeAction } from '../actions/editRecipe';
 
 const StyledRecipeStatic = styled.div`
-border: solid black 2px;
-margin: 2% auto;
+/* border: solid black 2px; */
+margin: 6% auto;
+background-color: #ffecd8;
 text-align: center;
+width: 50%;
+border-bottom: solid 2px slategray;
+padding: 2.5% 0;
+border-radius: 5px;
+
+    h4 {
+        font-size: 7rem;
+        margin: 1% auto;
+        display: inline-block;
+        border-radius: 30px;
+        border: solid 4px darkorange;
+        padding: 2%;
+        box-shadow: 2px -2px 10px 2px inset darkorange, -2px 2px 10px 2px inset darkorange;
+        background-color: white;
+    }
+
+    h5 {
+        font-size: 4rem;
+        font-family: 'amatic sc';
+        margin: 5% auto;
+        text-shadow: 2px 2px 2px slategray;
+    }
+
+    p {
+        font-size: 2rem;
+    }
+
+    li {
+        margin: 4%;
+        font-size: 2rem;
+    }
+
+    ol {
+        display: inline-block;
+        text-align: left;
+        width: 70%;
+        border: solid 2px darkorange;
+        border-radius: 5px;
+        padding: 4%;
+        box-shadow: 2px -2px 10px slategray, -2px 2px 10px slategray;
+        background-color: white;
+    }
+
+    ol li {
+        font-size: 1.6rem;
+    }
+
+    button {
+        margin: 4% 2% 2% 2%;
+    }
+
 `
 
 const StyledRecipeEditing = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    div {
-        margin: 2% 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    label {
-        font-family: 'Amatic SC', cursive;
-        font-weight: bold;
-        font-size: 3rem;
-    }
-
-    label.small {
-        font-size: 2rem;
-    }
-`
-
-const unorderedList = styled.ul`
-list-style-position: inside;
-width: 40%;
+border: solid black 2px;
+margin: 2% auto;
+text-align: center;
 `
 
 function Recipe(props){
@@ -50,7 +79,6 @@ function Recipe(props){
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
     
-
     // editing Form State
     const [staticState, setStaticState] = useState({
         title: recipe.recipe.title,
@@ -114,7 +142,6 @@ function Recipe(props){
     }
 
     const editHandler = (event) => {
-        event.preventDefault()
         event.stopPropagation()
         setIsEditing(true)
     }
@@ -167,7 +194,53 @@ function Recipe(props){
 
     const staticRecipe = () => {
         return (
-            <StyledRecipeStatic onClick={toggleDisabled}>
+            <StyledRecipeStatic key={recipe.recipe.id} onClick={toggleDisabled}>
+            <h4>{recipe.recipe.title}</h4>
+            { !collapsed && <>
+            <h5>Source:</h5>
+            <p> {recipe.recipe.source}</p>
+            <h5>Ingredients:</h5>
+                <ul>
+                    {recipe.ingredients.map((ing, idx) =>{
+                        return (
+                            <li key = {idx}>
+                                {`${ing.measurement} of ${ing.name}`}
+                            </li>
+                        )
+                    })}
+                </ul>
+            <h5>Instructions:</h5>
+                    <ol>
+                    {recipe.instructions.map((ins) => {
+                        return( <li key = {ins.step_number}>
+                            {ins.step_number + 1}- {ins.step_description}
+                                </li>
+                        )
+                    })}
+                    </ol>
+            <h5>Categories:</h5>
+                    <ul>
+                    {recipe.recipe.category.split(',').map((cat, idx)=> {
+                        return(
+                            <li>
+                                {cat}
+                            </li>
+                        )
+                    })}
+                    </ul>
+            <div className = "buttons-container">
+                <button onClick = {handleDelete}>Delete Recipe</button>
+                <button onClick={editHandler}>Edit Recipe</button>
+            </div>
+            </>
+            }
+        </StyledRecipeStatic>
+        )
+    }
+
+    const editingRecipe = () => {
+        return (
+            <StyledRecipeEditing onClick={toggleDisabled}>
             <h4>Recipe</h4>
             <p>Title: {recipe.recipe.title}</p>
             { !collapsed && <>
@@ -194,109 +267,6 @@ function Recipe(props){
             <h5>Categories:</h5>
                     {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
-                            <span key = {idx}>{cat}</span>
-                        )
-                    })}
-            <div className = "buttons-container">
-                <button onClick = {handleDelete}>Delete Recipe</button>
-                <button onClick={editHandler}>Edit Recipe</button>
-            </div>
-            </>
-            }
-        </StyledRecipeStatic>
-        )
-    }
-
-    const editingRecipe = () => {
-        return (
-            <StyledRecipeEditing onClick={toggleDisabled}>
-            <h2>Edit Recipe</h2>
-
-            <form>
-
-            <div>
-            <label>Title 
-            <input 
-                type='text'
-                name='title'
-                value={staticState.title}
-                placeholder={recipe.recipe.title}
-                onChange={changeHandler}
-            />
-            </label>
-            </div>
-            
-            <div>
-            <label>Source
-            <input 
-                type='text'
-                name='source'
-                value={staticState.source}
-                placeholder={recipe.recipe.source}
-                onChange={changeHandler}
-            />
-            </label>
-            </div>
-            
-            <div>
-            <label>Ingredients:</label>
-            <ul>
-                {ingredientsState.map((ing, idx) =>{
-                        return (
-                            <li key = {idx}>
-                                <label className='small'>Name:
-                                    <input
-                                        type='text'
-                                        name='name'
-                                        placeholder={ing.name}
-                                        data-idx={idx}
-                                        value={ingredientsState[idx].name}
-                                        onChange={ingredientChange}
-                                    />
-                                </label>
-                                <label className='small'>Measurement:
-                                    <input
-                                        type='text'
-                                        name='measurement'
-                                        placeholder={ing.measurement}
-                                        data-idx={idx}
-                                        value={ingredientsState[idx].measurement}
-                                        onChange={ingredientChange}
-                                    />
-                                </label>
-                            </li>
-                        )
-                    })}
-            </ul>
-            <button onClick={addIngredient}>Add Ingredient</button>
-            </div>
-            
-            <div>
-            <label>Instructions:</label>
-                {instructionsState.map((ins, idx) => {
-                        return( 
-                        <li key = {idx}>
-                            <label className='small'>Step: {idx + 1}
-                                <input
-                                    type='text'
-                                    name='step_description'
-                                    data-idx={idx}
-                                    value={instructionsState[idx].step_description}
-                                    placeholder={ins.step_description}
-                                    onChange={instructionsChange}
-                                />
-                            </label>
-                        </li>
-                        )
-                    })
-                }
-            <button onClick={addInstruction}>Add a Step</button>
-            </div>
-            
-            <div>
-            <label>Categories:</label>
-                {categoriesState.map((cat, idx)=> {
-                        return(
                             <label key = {idx} className='small'>
                                 <input
                                 key = {idx}
@@ -309,18 +279,14 @@ function Recipe(props){
                                 />
                             </label> 
                         )
-                    })
-                }
-                <button onClick={addCategory}>Add Category</button>
-            </div>
-            
-            </form>
-
+                    })}
             <div className = "buttons-container">
                 <button onClick = {handleDelete}>Delete Recipe</button>
                 <button onClick = {saveHandler}>Save</button>
                 <button onClick={cancelHandler}>Cancel</button>
             </div>
+            </>
+            }
         </StyledRecipeEditing>
         )
     }

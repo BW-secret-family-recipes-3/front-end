@@ -33,7 +33,13 @@ a {
 }
 
 svg {
+    color: black;
     font-size: 4rem;
+    transition: all 0.3s ease-in-out;
+    
+    &:hover {
+        color: gray;
+    }
 }
 
 p {
@@ -97,18 +103,22 @@ function Footer(props){
         history.push('/')
     }
 
+
+
     const loggedInLinks = () => {
         return (
             <StyledFooter className='footer'>
-                <FontAwesomeIcon icon={faUtensils} />
-                <p>SECRET FAMILY RECIPES</p>
-                <nav>
-                    <Link to = "/user/dashboard">Dashboard</Link>
-                    <Link onClick = {logOutHandler}>Logout</Link>
-                    <a href='https://github.com/BW-secret-family-recipes-3' target='_blank'>
-                        GitHub {githubIcon}</a>
-                </nav>
-            </StyledFooter>
+            <div>
+            <Link to='/'><FontAwesomeIcon icon={faUtensils} /></Link>
+            <p>SECRET FAMILY RECIPES</p>
+            </div>
+            <nav>
+                <Link to = "/user/dashboard">Dashboard</Link>
+                <Link onClick = {logOutHandler}>Logout</Link>
+                <a href='https://github.com/BW-secret-family-recipes-3' target='_blank'>
+                    GitHub {githubIcon}</a>
+            </nav>
+        </StyledFooter>
         );
     };
     
