@@ -89,10 +89,12 @@ function Login(props){
     const {errors, inProgress, loggedIn, response, token} = props.state; // props from global state
 
     // redirect if logged in
-
-    if (loggedIn) {
-        props.history.push('/user/dashboard/viewrecipes');
-    }
+    useEffect(() => {
+        if (loggedIn) {
+            props.history.push('/user/dashboard/viewrecipes');
+        };
+    }, [loggedIn])
+    
 
     const createFetchTokenAction = (loginObject) => {  // use this to submit your login form
         return props.fetchTokenAction(loginObject);          // loginObject must have shape: {username: <username>, password: <password>}
