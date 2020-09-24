@@ -55,6 +55,11 @@ nav {
 
     svg {
         font-size: 3rem;
+        color: white;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            color: black;
+        }
     }
 
     a:last-of-type {
