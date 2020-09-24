@@ -24,6 +24,16 @@ div:first-of-type {
     display: flex;
     justify-content: center;
     margin-bottom: 5%;
+
+        svg {
+            margin-right: 4%;
+            color: black;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                color: slategray;
+            }
+        }
 }
 
 a {
@@ -71,15 +81,15 @@ nav {
             color: white;
             margin: 0 5%;
             text-decoration: none;
-            border: 2px solid white;
+            border: 3px solid black;
             border-radius: 8px;
             padding: 1.5% 1.5%;
             transition: all 0.3s ease-in-out;
             background-color: darkorange;
 
             &:hover {
+                background-color: #ffecd8;
                 color: black;
-                border-color: black;
                 transition: all 0.3s ease-in-out;
             }
     }
@@ -97,19 +107,25 @@ function Footer(props){
         history.push('/')
     }
 
+
+
     const loggedInLinks = () => {
         return (
             <StyledFooter className='footer'>
-                <FontAwesomeIcon icon={faUtensils} />
-                <p>SECRET FAMILY RECIPES</p>
+                <div>
+                    <Link to='/'>
+                        <FontAwesomeIcon icon={faUtensils} />
+                    </Link>
+                    <p>SECRET FAMILY RECIPES</p>
+                </div>
                 <nav>
-                    <Link to = "/user/dashboard">Dashboard</Link>
-                    <Link onClick = {logOutHandler}>Logout</Link>
+                    <Link to = "/user/dashboard">DASHBOARD</Link>
+                    <Link onClick = {logOutHandler}>LOGOUT</Link>
                     <a href='https://github.com/BW-secret-family-recipes-3' target='_blank'>
                         GitHub {githubIcon}</a>
                 </nav>
             </StyledFooter>
-        );
+        );   
     };
     
     const loggedOutLinks = () => {
