@@ -42,13 +42,19 @@ function ViewRecipes(props){
         props.deleteRecipeAction({token: token , recipeId: rId});
     }
 
+    // edit recipe handler
+
+    const editRecipe = (recipeObj, rId) => {
+        props.editRecipeAction({editedRecipe: recipeObj, token: token, recipeId: rId});
+    }
+
     // if there are recipes in the array...
     const RecipesToDisplay = (props) => {
         return (
             <div>
                 <SearchRecipes/>
                 {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipeAction}/>
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
                 })}
             </div>
         );

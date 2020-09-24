@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { editRecipeAction } from '../actions/editRecipe';
 
 const StyledRecipeStatic = styled.div`
 border: solid black 2px;
@@ -38,20 +39,22 @@ width: 40%;
 
 function Recipe(props){
 
-    // token and userId from local storage
+    // destructure  props
+    const {recipe, deleteRecipe, editRecipe} = props;
 
-    const token = localStorage.getItem('token');
+    // grab userId form localStorage
+
     const userId = localStorage.getItem('userId');
 
     // state hooks
     const [collapsed, setDisabled] = useState(true);
     const [isEditing, setIsEditing] = useState(false)
-    const {recipe, deleteRecipe} = props;
+    
 
     // editing Form State
     const [staticState, setStaticState] = useState({
-        title: '',
-        source: ''
+        title: recipe.recipe.title,
+        source: recipe.recipe.source
     })
 
     const blankIngredient = {measurement: '', name: ''};
@@ -159,7 +162,7 @@ function Recipe(props){
 
     const saveHandler = (e) => {
         e.preventDefault();
-        return console.log(recipeFormat());
+        return editRecipe(recipeFormat(), recipe.recipe.id);
     }
 
     const staticRecipe = () => {
@@ -294,7 +297,7 @@ function Recipe(props){
             <label>Categories:</label>
                 {categoriesState.map((cat, idx)=> {
                         return(
-                            <label className='small'>
+                            <label key = {idx} className='small'>
                                 <input
                                 key = {idx}
                                 type='text'
