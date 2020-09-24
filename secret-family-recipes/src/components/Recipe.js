@@ -37,12 +37,19 @@ border-radius: 5px;
         margin-left: 2%;
     }
     .category {
-        margin: 0 2%;
+        margin: 2%;
         padding: 2%;
         background-color: white;
         border-radius: 30px;
         border: solid 4px darkorange;
         box-shadow: 2px -2px 10px 2px inset darkorange, -2px 2px 10px 2px inset darkorange;
+    }
+    .categories {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     p {
         font-size: 2rem;
@@ -159,11 +166,6 @@ const StyledRecipeEditing = styled.div`
             outline: none;
         }
      }
-`
-
-const unorderedList = styled.ul`
-list-style-position: inside;
-width: 40%;
 `
 
 function Recipe(props){
@@ -332,11 +334,14 @@ function Recipe(props){
                         )
                     })}
             <h5>Categories:</h5>
+                    <div className='categories'>
                     {recipe.recipe.category.split(',').map((cat, idx)=> {
                         return(
                             <span key = {idx} className='category'>{cat}</span>
+                            
                         )
                     })}
+                    </div>
             <div className = "buttons-container">
                 <button onClick={editHandler}>Edit</button>
                 <button onClick = {handleDelete}>Delete</button>
