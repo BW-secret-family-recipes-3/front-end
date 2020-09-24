@@ -49,6 +49,10 @@ border-radius: 5px;
         background-color: white;
     }
 
+    ol li {
+        font-size: 1.6rem;
+    }
+
     button {
         margin: 4% 2% 2% 2%;
     }

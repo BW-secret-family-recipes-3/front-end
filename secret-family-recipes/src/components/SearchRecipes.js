@@ -78,7 +78,6 @@ function SearchRecipes(props){
 
 
 
-    let searchedToDisplay;
 
     const onSubmit = e => {
         e.preventDefault();
