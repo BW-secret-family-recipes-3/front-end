@@ -25,7 +25,7 @@ function Dashboard(props){
             
             {/* Dashboard component goes here*/}
             <Router>
-                <DashboardHeader username = {props.userState}/>
+                <DashboardHeader />
                 <Switch>
                     <Route exact path = "/user/dashboard/viewrecipes" component = {ViewRecipes}/>
                     <Route exact path = "/user/dashboard/addrecipe" component = {AddRecipe}/>

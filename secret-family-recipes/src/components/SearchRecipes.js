@@ -79,7 +79,7 @@ function SearchRecipes(props){
     const [collapsed, setCollapsed] = useState(true);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-   console.log(props)
+//    console.log(props)
 
 
 
@@ -109,18 +109,18 @@ function SearchRecipes(props){
             if (prop === 'custom') {
                 searchFor.push(searchValues[prop].toString().toLowerCase())
             } else if (searchValues[prop] === true) {
-                console.log(prop)
+                // console.log(prop)
                 searchFor.push(prop.toLowerCase())
             }
         }
-        console.log(props)
+        // console.log(props)
         let searchedRecipes = [];
         props.recipes.forEach(rec=>{
-            console.log(searchFor)
-            console.log(rec)
+            // console.log(searchFor)
+            // console.log(rec)
             const categoryArray = rec.recipe.category.split(',').map(word=>word.toLowerCase());
             let count = 0;
-            console.log(categoryArray)
+            // console.log(categoryArray)
             for (let i = 0; i < searchFor.length; i++) { 
                 for (let j = 0; j < categoryArray.length; j++) {
                 if (searchFor[i] === categoryArray[j]) {
@@ -130,7 +130,7 @@ function SearchRecipes(props){
             }
             return count > 0
         });
-        console.log(searchedRecipes);
+        // console.log(searchedRecipes);
         setFilteredRecipes(searchedRecipes);
         setSearchValues(initialSearchValues);
     };
@@ -146,9 +146,9 @@ function SearchRecipes(props){
     }
 
     let uniqueSortedCategories = [...new Set(longArr)];
-    console.log(uniqueSortedCategories)
+    // console.log(uniqueSortedCategories)
 
-    console.log(props.recipes);
+    // console.log(props.recipes);
     return(
         <div>
             <Button onClick={()=>{
