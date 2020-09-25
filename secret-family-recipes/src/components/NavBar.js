@@ -84,7 +84,7 @@ function NavBar(props) {
             <nav>
                 <Link to = "/user/dashboard">DASHBOARD</Link>
                 <span></span>
-                <Link onClick={clickHandlerLogout}>LOGOUT</Link>
+                {/* <Link onClick={clickHandlerLogout}>LOGOUT</Link> */}
             </nav>
         )
     }

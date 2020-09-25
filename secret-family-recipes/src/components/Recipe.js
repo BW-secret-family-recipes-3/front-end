@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { editRecipeAction } from '../actions/editRecipe';
 
 const StyledRecipeStatic = styled.div`
 border: solid black 2px;
@@ -42,6 +41,8 @@ function Recipe(props){
     // destructure  props
     const {recipe, deleteRecipe, editRecipe} = props;
 
+    // console.log(recipe);
+
     // grab userId form localStorage
 
     const userId = localStorage.getItem('userId');
@@ -56,9 +57,10 @@ function Recipe(props){
         title: recipe.recipe.title,
         source: recipe.recipe.source
     })
-
+    
+    const initialIngredientsState = recipe.ingredients;
     const blankIngredient = {measurement: '', name: ''};
-    const [ingredientsState, setIngredientsState] = useState(recipe.ingredients);
+    const [ingredientsState, setIngredientsState] = useState(initialIngredientsState);
 
     const blankInstruction = {
         step_number: -1,
@@ -71,9 +73,11 @@ function Recipe(props){
     const [categoriesState, setCategories] = useState(recipe.recipe.category.split(','))
 
     const ingredientChange = (e) => {
-    const updatedIngredients = [...ingredientsState];
-       updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
-       setIngredientsState(updatedIngredients);
+        e.preventDefault();
+        const updatedIngredients = [...ingredientsState];
+        updatedIngredients[e.target.dataset.idx][e.target.name] = e.target.value;
+        setIngredientsState(updatedIngredients);
+        e.stopPropagation();
     }
 
     const addIngredient = (e) => {
@@ -82,9 +86,11 @@ function Recipe(props){
     }
 
     const instructionsChange = (e) => {
+        e.preventDefault();
         const updatedInstructions = [...instructionsState];
-       updatedInstructions[e.target.dataset.idx][e.target.name] = e.target.value;
-       setInstructions(updatedInstructions);
+        updatedInstructions[e.target.dataset.idx][e.target.name] = e.target.value;
+        setInstructions(updatedInstructions);
+        e.stopPropagation();
     }
 
     const addInstruction = (e) => {
@@ -95,7 +101,8 @@ function Recipe(props){
     const categoryChange = (e) => {
         const updatedCategory = [...categoriesState];
        updatedCategory[e.target.dataset.idx] = e.target.value;
-       setCategories(updatedCategory)
+       setCategories(updatedCategory);
+       e.stopPropagation();
     }
 
     const addCategory = (e) => {
@@ -120,8 +127,10 @@ function Recipe(props){
     }
 
     const changeHandler = (event) => {
+        event.preventDefault();
         const {name, value} = event.target
         setStaticState({...staticState, [name]:value})
+        event.stopPropagation();
     }
 
     const cancelHandler = (event) => {
@@ -131,6 +140,7 @@ function Recipe(props){
             title: '',
             source: ''
         })
+        event.stopPropagation();
     }
 
     // format recipe
@@ -246,6 +256,7 @@ function Recipe(props){
                             <li key = {idx}>
                                 <label className='small'>Name:
                                     <input
+                                        key = {idx}
                                         type='text'
                                         name='name'
                                         placeholder={ing.name}
@@ -256,6 +267,7 @@ function Recipe(props){
                                 </label>
                                 <label className='small'>Measurement:
                                     <input
+                                        key = {idx}
                                         type='text'
                                         name='measurement'
                                         placeholder={ing.measurement}
@@ -278,6 +290,7 @@ function Recipe(props){
                         <li key = {idx}>
                             <label className='small'>Step: {idx + 1}
                                 <input
+                                    key = {idx}
                                     type='text'
                                     name='step_description'
                                     data-idx={idx}

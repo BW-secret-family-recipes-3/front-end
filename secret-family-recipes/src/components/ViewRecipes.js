@@ -31,30 +31,33 @@ function ViewRecipes(props){
     
 
     // fetching recipes
+
+    const {editRecipe, deleteRecipe, addRecipe, getRecipesAction} = props;
     useEffect(() => {
-        props.getRecipesAction(token, userId)
-    },[props.editRecipe.toggle, props.deleteRecipe.toggle, props.addRecipe.toggle]);
+        getRecipesAction(token, userId)
+    },[editRecipe.toggle, deleteRecipe.toggle, addRecipe.toggle]);
 
 
     // delete recipe handler
 
-    const deleteRecipe = (rId) => {
+    const deleteRecipeHandler = (rId) => {
         props.deleteRecipeAction({token: token , recipeId: rId});
     }
 
     // edit recipe handler
 
-    const editRecipe = (recipeObj, rId) => {
+    const editRecipeHandler = (recipeObj, rId) => {
         props.editRecipeAction({editedRecipe: recipeObj, token: token, recipeId: rId});
     }
 
     // if there are recipes in the array...
-    const RecipesToDisplay = (props) => {
+    const RecipesToDisplay = (args) => {
         return (
             <div>
-                <SearchRecipes/>
-                {props.recipes.map(r => {
-                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
+                {/* <SearchRecipes/> */}
+                {args.recipes.map(r => {
+                    console.log('recipe' + r);
+                    return <Recipe key = {r.recipe.id} recipe = {r} deleteRecipe = {deleteRecipeHandler} editRecipe = {editRecipeHandler}/>
                 })}
             </div>
         );
