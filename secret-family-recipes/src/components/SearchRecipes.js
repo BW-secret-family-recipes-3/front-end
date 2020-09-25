@@ -141,7 +141,7 @@ function SearchRecipes(props){
     const longArr = [];
     for (let i = 0; i < newArr.length; i++) {
         for (let j = 0; j < newArr[i].length; j++) {
-            longArr.push(newArr[i][j]);
+            longArr.push(newArr[i][j].toLowerCase());
         }
     }
 
@@ -158,8 +158,9 @@ function SearchRecipes(props){
             <>
             <StyledForm onSubmit={onSubmit}>
                 {uniqueSortedCategories.map((cat, ind)=>{
+                    const upperCasedCat = cat.replace(cat.charAt(0), cat.charAt(0).toUpperCase());
                     return (
-                        <label key={ind}htmlFor={cat}>{cat}
+                        <label key={ind}htmlFor={cat}>{upperCasedCat}
                             <Checkbox
                             type='checkbox'
                             name={cat}
