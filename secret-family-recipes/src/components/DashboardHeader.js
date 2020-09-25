@@ -7,12 +7,11 @@ import Axios from 'axios';
 
 const StyledHeader = styled.header`
 background-color: darkorange;
-padding: 3%;
+padding: 1%;
 margin-bottom: 2%;
     
     h3 {
-        margin-bottom: 4%;
-        padding: 0 2% 2% 2%;
+        padding: 0 2% 1% 2%;
         font-size: 5rem;
         border-bottom: solid black 7px;
         border-left: solid darkorange 30px;
@@ -31,7 +30,7 @@ justify-content: center;
     a {
         display: inline-block;
         text-decoration: none;
-        margin: 2% 8% 1% 8%;
+        margin: 2% 8% 0 8%;
         background-color: white;
         color: black;
         border: solid 2px black;

@@ -1,11 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 // import PropTypes from 'prop-types';
+
+const StyledDiv = styled.div`
+  input {
+    margin: 0 1%;
+  }
+`
+
 
 export const DynamicInputs = ({ idx, dynamicState, handleDynamicChange, field1, field2 }) => {
   const field1Id = `${field1}-${idx}`;
   const field2Id = `${field2}-${idx}`;
   return (
-      <div key={`Dynamic-${idx}`}>
+      <StyledDiv key={`Dynamic-${idx}`}>
         <label htmlFor={field1Id}>{`${field1} #${idx + 1}`}</label>
         <input
           type="text"
@@ -26,14 +34,14 @@ export const DynamicInputs = ({ idx, dynamicState, handleDynamicChange, field1, 
           value={dynamicState[idx].field2}
           onChange={handleDynamicChange}
         />
-      </div>
+      </StyledDiv>
     );
 };
 
 export const DynamicInput = ({ idx, dynamicState, handleDynamicChange, field}) => {
     const fieldId = `${field}-${idx}`;
     return (
-        <div key={`Dynamic-${idx}`}>
+        <StyledDiv key={`Dynamic-${idx}`}>
             <label htmlFor={fieldId}>{`${field} #${idx + 1}`}</label>
             <input
             type="text"
@@ -44,7 +52,7 @@ export const DynamicInput = ({ idx, dynamicState, handleDynamicChange, field}) =
             value={dynamicState[idx].field}
             onChange={handleDynamicChange}
             />
-        </div>
+        </StyledDiv>
     );
 };
 // DynamicInputs.propTypes = {

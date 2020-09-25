@@ -23,7 +23,7 @@ font-family: 'amatic sc';
 div:first-of-type {
     display: flex;
     justify-content: center;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
 
         svg {
             margin-right: 4%;

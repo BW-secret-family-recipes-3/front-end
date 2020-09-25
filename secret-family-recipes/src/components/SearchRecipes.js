@@ -127,7 +127,7 @@ function SearchRecipes(props){
     };
 
 
-    
+    console.log(props.recipes);
     return(
         <div>
             <Button onClick={()=>{
@@ -137,117 +137,7 @@ function SearchRecipes(props){
             <>
             <form onSubmit={onSubmit}>
 
-                <label htmlFor='healthy'>Healthy
-                    <Checkbox
-                    type='checkbox'
-                    name='healthy'
-                    checked={searchValues.healthy}
-                    onChange={onChange} />
-                </label>
 
-                <label htmlFor='appetizer'>Appetizer
-                    <Checkbox
-                    type='checkbox'
-                    name='appetizer'
-                    checked={searchValues.appetizer}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='pastry'>Pastry
-                    <Checkbox
-                    type='checkbox'
-                    name='pastry'
-                    checked={searchValues.pastry}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='salad'>Salad
-                    <input
-                    type='checkbox'
-                    name='salad'
-                    checked={searchValues.salad}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='soup'>Soup
-                    <input
-                    type='checkbox'
-                    name='soup'
-                    checked={searchValues.soup}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='snack'>Snack
-                <input
-                    type='checkbox'
-                    name='snack'
-                    checked={searchValues.bread}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='side'>Side Dish
-                    <input
-                    type='checkbox'
-                    name='side'
-                    checked={searchValues.side}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='sandwich'>Sandwich
-                    <input
-                    type='checkbox'
-                    name='sandwich'
-                    checked={searchValues.sandwich}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='vegan'>Vegan
-                    <input
-                    type='checkbox'
-                    name='vegan'
-                    checked={searchValues.vegan}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='lowCarb'>Low Carb
-                    <input
-                    type='checkbox'
-                    name='lowCarb'
-                    checked={searchValues.lowCarb}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='crockpot'>Crock Pot
-                    <input
-                    type='checkbox'
-                    name='crockpot'
-                    checked={searchValues.crockpot}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='mainCourse'>Main Course
-                    <input
-                    type='checkbox'
-                    name='mainCourse'
-                    checked={searchValues.mainCourse}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='quick'>Quick and Easy
-                    <input
-                    type='checkbox'
-                    name='quick'
-                    checked={searchValues.quick}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='main-search'>Custom Search
-                    <input 
-                    type='text'
-                    name='custom'
-                    value={searchValues.custom}
-                    onChange={onChange} />
-                </label>
                 <Button>SEARCH</Button>
             </form>
             {/* SearchRecipes component goes here*/}
