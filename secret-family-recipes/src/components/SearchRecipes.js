@@ -135,6 +135,18 @@ function SearchRecipes(props){
         setSearchValues(initialSearchValues);
     };
 
+    const newArr = props.recipes.map(recipe=>{
+        return recipe.recipe.category.split(',');
+    });
+    const longArr = [];
+    for (let i = 0; i < newArr.length; i++) {
+        for (let j = 0; j < newArr[i].length; j++) {
+            longArr.push(newArr[i][j]);
+        }
+    }
+
+    let uniqueSortedCategories = [...new Set(longArr)];
+    console.log(uniqueSortedCategories)
 
     console.log(props.recipes);
     return(
@@ -145,9 +157,7 @@ function SearchRecipes(props){
             {!collapsed && 
             <>
             <StyledForm onSubmit={onSubmit}>
-                {props.recipes.map(recipe=>{
-                    console.log(recipe)
-                    return recipe.recipe.category.split(',').map((cat, ind) => {
+                {uniqueSortedCategories.map((cat, ind)=>{
                     return (
                         <label key={ind}htmlFor={cat}>{cat}
                             <Checkbox
@@ -157,7 +167,6 @@ function SearchRecipes(props){
                             onChange={onChange} />
                         </label>
                     )
-                     } )
                 })}
 
                 <Button style={{alignSelf: 'center', fontFamily: 'amatic sc', fontSize: '2rem'}}>SEARCH</Button>
