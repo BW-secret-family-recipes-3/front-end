@@ -43,7 +43,7 @@ border: solid 1px darkorange;
 `
 
 const Checkbox = styled.input`
-margin: 1%;
+margin: 1.1%;
 `
 
 const StyledForm = styled.form`
