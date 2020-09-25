@@ -2,6 +2,34 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {addRecipeAction} from '../actions/addRecipe'
 import {DynamicInputs, DynamicInput} from './DynamicInputs';
+import styled from 'styled-components';
+
+
+const StyledDiv = styled.div`
+font-family: 'Amatic SC';
+font-size: '2.6rem';
+    
+    h3 {
+        margin: 1%;
+    }
+
+    h4 {
+        font-size: 2.6rem;
+        margin-top: 1%;
+    }
+`;
+
+const StyledButton = styled.input`
+margin: 1% auto;
+font-family: roboto;
+background-color: slategray;
+color: white;
+border: solid 1px darkorange;
+text-shadow: 1px 1px 1px black;
+padding: .5%;
+border-radius: 4px;
+`
+
 
 function AddRecipe(props){
 
@@ -95,60 +123,73 @@ function AddRecipe(props){
     // jsx
 
     return(
-        <div>
+        <StyledDiv>
             <h3>Add Recipe</h3>
             <form onSubmit = {submitHandler}>
                 <div className = "static-inputs">
-                    <label htmlFor="title">Title</label>   
-                    <input type="text" name="title" id="title" value = {staticState.title} onChange = {handleStaticChange}/> 
-                    <label htmlFor="source">Source</label> 
-                    <input type="text" name="source" id="source" value = {staticState.source} onChange = {handleStaticChange}/>
+                    <label htmlFor="title">Title</label>   <br></br>
+                    <input type="text" name="title" id="title" value = {staticState.title} onChange = {handleStaticChange}/> <br></br>
+                    <label htmlFor="source">Source</label> <br></br>
+                    <input type="text" name="source" id="source" value = {staticState.source} onChange = {handleStaticChange}/><br></br>
                 </div> 
                 <div className = "dynamic-inputs">
                     <div className = "ingredients-inputs">
-                        <h4>Ingredients</h4>
-                        <input type="button" value="Add New Ingredient" onClick={addIngredient} /> 
+                        <h4 >Ingredients</h4>
+                        <StyledButton type="button" value="Add New Ingredient" onClick={addIngredient} /> <br></br>
                         {ingredientsState.map((val, idx) => {
-                            return <DynamicInputs
+                            return (
+                                    <>
+                                    <DynamicInputs
                                     key = {idx}
                                     idx = {idx}
                                     dynamicState = {ingredientsState}
                                     handleDynamicChange = {handleIngredientsChange}
                                     field1 = "ingredient"
                                     field2 = "measurement"
-                                    />
+                                    /><br></br>
+                                    </>
+                            )
                         })}
                     </div>
                     <div className = "instructions-inputs">
                         <h4>Instructions</h4>
-                        <input type="button" value="Add New Instruction" onClick={addInstruction} />  
+                        <StyledButton type="button" value="Add New Instruction" onClick={addInstruction} />  <br></br>
                         {instructionsState.map((val, idx) => {
-                            return <DynamicInput
+                            return (
+                                    <>
+                                    <DynamicInput
                                     key = {idx}
                                     idx = {idx}
                                     dynamicState = {instructionsState}
                                     handleDynamicChange = {handleInstructionsChange}
                                     field = "step"
-                                    />
+                                    /><br></br>
+                                    </>
+                                )   
                         })}
                     </div>
                     <div className = "categories-inputs">
                         <h4>Categories</h4>
-                        <input type="button" value="Add New Category" onClick={addCategory} /> 
+                        <StyledButton type="button" value="Add New Category" onClick={addCategory} /> <br></br>
                         {categoriesState.map((val, idx) => {
-                            return <DynamicInput
+                            return (
+                                    <>
+                                    <DynamicInput
                                     key = {idx}
                                     idx = {idx}
                                     dynamicState = {categoriesState}
                                     handleDynamicChange = {handleCategoryChange}
                                     field = "category"
-                                    />
+                                    style={{fontFamily: 'Amatic SC', fontSize: '2.6rem'}}
+                                    /> <br></br>
+                                    </>
+                            )
                         })}
                     </div>
                 </div>         
-                <input type="submit" value="Submit" />  
+                <StyledButton type="submit" value="Submit" />  
             </form>
-        </div>
+        </StyledDiv>
     )
 }
 

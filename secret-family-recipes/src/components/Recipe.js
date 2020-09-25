@@ -20,6 +20,10 @@ border-radius: 5px;
         padding: 2%;
         box-shadow: 2px -2px 10px 2px inset darkorange, -2px 2px 10px 2px inset darkorange;
         background-color: white;
+
+        &:hover {
+            cursor: default;
+        }
     }
     h5 {
         font-size: 4rem;
@@ -168,6 +172,19 @@ const StyledRecipeEditing = styled.div`
      }
 `
 
+const ExpandButon = styled.a`
+font-size: 5rem;
+color: slategray;
+text-shadow: 2px 2px 2px white;
+margin: 2% auto;
+display: inline-block;
+padding: 2%;
+
+     &:hover {
+         cursor: pointer;
+     }
+`
+
 function Recipe(props){
 
     // destructure  props
@@ -301,8 +318,9 @@ function Recipe(props){
 
     const staticRecipe = () => {
         return (
-            <StyledRecipeStatic onClick={toggleDisabled}>
-            <h4>{recipe.recipe.title}</h4>
+            <StyledRecipeStatic>
+            <h4>{recipe.recipe.title}</h4><br></br>
+            {collapsed ? <ExpandButon onClick={toggleDisabled}>+</ExpandButon> : <ExpandButon onClick={toggleDisabled}>-</ExpandButon>}
             { !collapsed && <>
             <h5>Recipe Source:</h5><p>{recipe.recipe.source}</p>
             <h5>Ingredients: 

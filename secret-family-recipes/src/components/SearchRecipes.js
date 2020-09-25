@@ -43,7 +43,16 @@ border: solid 1px darkorange;
 `
 
 const Checkbox = styled.input`
-display: block;
+margin: 1.1%;
+`
+
+const StyledForm = styled.form`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+width: 60%;
+margin: auto;
+
 `
 
 const initialSearchValues = {
@@ -77,7 +86,7 @@ function SearchRecipes(props){
 
     const onChange = e => {
         const {name, value, checked, type} = e.target;
-        const newValue = type === 'checkbox' ? checked : value;
+        const newValue = checked;
         change(name, newValue)
     };
 
@@ -126,8 +135,20 @@ function SearchRecipes(props){
         setSearchValues(initialSearchValues);
     };
 
+    const newArr = props.recipes.map(recipe=>{
+        return recipe.recipe.category.split(',');
+    });
+    const longArr = [];
+    for (let i = 0; i < newArr.length; i++) {
+        for (let j = 0; j < newArr[i].length; j++) {
+            longArr.push(newArr[i][j]);
+        }
+    }
 
-    
+    let uniqueSortedCategories = [...new Set(longArr)];
+    console.log(uniqueSortedCategories)
+
+    console.log(props.recipes);
     return(
         <div>
             <Button onClick={()=>{
@@ -135,131 +156,35 @@ function SearchRecipes(props){
             }}>SEARCH RECIPES</Button>
             {!collapsed && 
             <>
-            <form onSubmit={onSubmit}>
+            <StyledForm onSubmit={onSubmit}>
+                {uniqueSortedCategories.map((cat, ind)=>{
+                    return (
+                        <label key={ind}htmlFor={cat}>{cat}
+                            <Checkbox
+                            type='checkbox'
+                            name={cat}
+                            checked={searchValues[cat]}
+                            onChange={onChange} />
+                        </label>
+                    )
+                })}
 
-                <label htmlFor='healthy'>Healthy
-                    <Checkbox
-                    type='checkbox'
-                    name='healthy'
-                    checked={searchValues.healthy}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='appetizer'>Appetizer
-                    <Checkbox
-                    type='checkbox'
-                    name='appetizer'
-                    checked={searchValues.appetizer}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='pastry'>Pastry
-                    <Checkbox
-                    type='checkbox'
-                    name='pastry'
-                    checked={searchValues.pastry}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='salad'>Salad
-                    <input
-                    type='checkbox'
-                    name='salad'
-                    checked={searchValues.salad}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='soup'>Soup
-                    <input
-                    type='checkbox'
-                    name='soup'
-                    checked={searchValues.soup}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='snack'>Snack
-                <input
-                    type='checkbox'
-                    name='snack'
-                    checked={searchValues.bread}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='side'>Side Dish
-                    <input
-                    type='checkbox'
-                    name='side'
-                    checked={searchValues.side}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='sandwich'>Sandwich
-                    <input
-                    type='checkbox'
-                    name='sandwich'
-                    checked={searchValues.sandwich}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='vegan'>Vegan
-                    <input
-                    type='checkbox'
-                    name='vegan'
-                    checked={searchValues.vegan}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='lowCarb'>Low Carb
-                    <input
-                    type='checkbox'
-                    name='lowCarb'
-                    checked={searchValues.lowCarb}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='crockpot'>Crock Pot
-                    <input
-                    type='checkbox'
-                    name='crockpot'
-                    checked={searchValues.crockpot}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='mainCourse'>Main Course
-                    <input
-                    type='checkbox'
-                    name='mainCourse'
-                    checked={searchValues.mainCourse}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='quick'>Quick and Easy
-                    <input
-                    type='checkbox'
-                    name='quick'
-                    checked={searchValues.quick}
-                    onChange={onChange} />
-                </label>
-
-                <label htmlFor='main-search'>Custom Search
-                    <input 
-                    type='text'
-                    name='custom'
-                    value={searchValues.custom}
-                    onChange={onChange} />
-                </label>
-                <Button>SEARCH</Button>
-            </form>
+                <Button style={{alignSelf: 'center', fontFamily: 'amatic sc', fontSize: '2rem'}}>SEARCH</Button>
+            </StyledForm>
             {/* SearchRecipes component goes here*/}
             </>
             }
-            {filteredRecipes.map(rec=>{
+            {filteredRecipes.length > 0 && 
+            <div style={{borderBottom: 'solid 3px black', width: '80%', margin: 'auto'}}>
+                <p style={{fontFamily: 'amatic sc', fontSize: '3rem', margin: '1% auto'}}>We found {filteredRecipes.length} recipes that matched your search</p>
+                {filteredRecipes.map(rec=>{
                 return (
-                    <div style={{border: 'solid 1px black', margin: '1%'}}>
-                    <p>{rec.recipe.title}</p>
-                    </div>
+                        <Recipe recipe = {rec} deleteRecipe = {props.deleteRecipe} editRecipe = {props.editRecipe}/>
+                    
                 )
-            })}      
+            })}   
+                <p style={{fontFamily: 'amatic sc', fontSize: '3rem', margin: '1% auto'}}>End of search</p> 
+            </div>}
         </div>
     );
 };
