@@ -52,7 +52,8 @@ const StyledHome = styled.div`
     }
 
      div.imageGallery {
-        display: flex; 
+        display: flex;
+        width: 100%; 
         flex-direction: row;
         justify-content: space-evenly;
         margin: 5% 0;
