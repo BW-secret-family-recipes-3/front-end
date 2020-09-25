@@ -54,7 +54,7 @@ p {
 
 nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
 
     svg {
@@ -79,7 +79,6 @@ nav {
 
     a:nth-of-type(2), a:first-of-type {
             color: white;
-            margin: 0 5%;
             text-decoration: none;
             border: 3px solid white;
             border-radius: 8px;

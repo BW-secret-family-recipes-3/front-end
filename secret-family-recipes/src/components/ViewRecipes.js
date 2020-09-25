@@ -52,7 +52,7 @@ function ViewRecipes(props){
     const RecipesToDisplay = (props) => {
         return (
             <div>
-                <SearchRecipes recipes={props.recipes}/>
+                <SearchRecipes deleteRecipe = {deleteRecipe} editRecipe = {editRecipe} recipes={props.recipes}/>
                 {props.recipes.map((r, idx) => {
                     return <Recipe key = {idx} recipe = {r} deleteRecipe = {deleteRecipe} editRecipe = {editRecipe}/>
                 })}

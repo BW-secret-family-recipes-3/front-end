@@ -43,7 +43,16 @@ border: solid 1px darkorange;
 `
 
 const Checkbox = styled.input`
-display: block;
+margin: 1%;
+`
+
+const StyledForm = styled.form`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+width: 60%;
+margin: auto;
+
 `
 
 const initialSearchValues = {
@@ -77,7 +86,7 @@ function SearchRecipes(props){
 
     const onChange = e => {
         const {name, value, checked, type} = e.target;
-        const newValue = type === 'checkbox' ? checked : value;
+        const newValue = checked;
         change(name, newValue)
     };
 
@@ -135,21 +144,38 @@ function SearchRecipes(props){
             }}>SEARCH RECIPES</Button>
             {!collapsed && 
             <>
-            <form onSubmit={onSubmit}>
+            <StyledForm onSubmit={onSubmit}>
+                {props.recipes.map(recipe=>{
+                    console.log(recipe)
+                    return recipe.recipe.category.split(',').map((cat, ind) => {
+                    return (
+                        <label key={ind}htmlFor={cat}>{cat}
+                            <Checkbox
+                            type='checkbox'
+                            name={cat}
+                            checked={searchValues[cat]}
+                            onChange={onChange} />
+                        </label>
+                    )
+                     } )
+                })}
 
-
-                <Button>SEARCH</Button>
-            </form>
+                <Button style={{alignSelf: 'center', fontFamily: 'amatic sc', fontSize: '2rem'}}>SEARCH</Button>
+            </StyledForm>
             {/* SearchRecipes component goes here*/}
             </>
             }
-            {filteredRecipes.map(rec=>{
+            {filteredRecipes.length > 0 && 
+            <div style={{borderBottom: 'solid 3px black', width: '80%', margin: 'auto'}}>
+                <p style={{fontFamily: 'amatic sc', fontSize: '3rem', margin: '1% auto'}}>We found {filteredRecipes.length} recipes that matched your search</p>
+                {filteredRecipes.map(rec=>{
                 return (
-                    <div style={{border: 'solid 1px black', margin: '1%'}}>
-                    <p>{rec.recipe.title}</p>
-                    </div>
+                        <Recipe recipe = {rec} deleteRecipe = {props.deleteRecipe} editRecipe = {props.editRecipe}/>
+                    
                 )
-            })}      
+            })}   
+                <p style={{fontFamily: 'amatic sc', fontSize: '3rem', margin: '1% auto'}}>End of search</p> 
+            </div>}
         </div>
     );
 };
