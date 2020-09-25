@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
-import { connect } from "react-redux";
+import React from 'react';
 import {BrowserRouter as Router, Link} from "react-router-dom";
 import styled from 'styled-components';
-import Axios from 'axios';
 
 
 const StyledHeader = styled.header`
@@ -53,9 +51,11 @@ justify-content: center;
 
 function DashboardHeader(props){
 
+    const username = localStorage.getItem('username');
+
     return(
         <StyledHeader>
-            <h3>{/*USERNAME WILL GO HERE ->*/}(Username)'s Recipe Collection</h3>
+            <h3>{username}'s Recipe Collection</h3>
                 <FlexContainer>
                     <Link to = "/user/dashboard/viewrecipes">View Recipes</Link>
                     <Link to = "/user/dashboard/addrecipe">Add Recipe</Link>

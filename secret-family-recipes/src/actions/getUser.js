@@ -9,6 +9,7 @@ export const getUserAction = (token) => dispatch => {
     getUserReq(token)
         .then(res => {
             localStorage.setItem('userId', res.data[0].id)
+            localStorage.setItem('username', res.data[0].username);
             dispatch({type: GET_USER_SUCCESS, payload: res});
         })
         .catch(err => {

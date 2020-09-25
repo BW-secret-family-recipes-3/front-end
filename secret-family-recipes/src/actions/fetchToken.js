@@ -14,12 +14,12 @@ export const fetchTokenAction = (credentials) => dispatch => {
     dispatch({type: FETCHING_TOKEN});
     makeLoginReq(credentials)
         .then(res => {
-            console.log(res);
+            // console.log(res);
             localStorage.setItem('token', res.data.token); 
             dispatch({type: FETCH_TOKEN_SUCCESS, payload: res});
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             dispatch({type: FETCH_TOKEN_ERROR, payload: err});
         });
 };

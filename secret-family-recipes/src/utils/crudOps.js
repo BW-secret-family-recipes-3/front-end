@@ -64,7 +64,7 @@ export async function editRecipeReq(args) {
 
 export async function deleteRecipeReq(args){
     const {token, recipeId} = args;
-    console.log(args);
+    // console.log(args);
     const URL = `https://secret-family-backend.herokuapp.com/api/users/recipes/${recipeId}`;
     const header = {Authorization: token};
 

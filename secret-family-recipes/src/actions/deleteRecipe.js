@@ -8,11 +8,11 @@ export const deleteRecipeAction = (args) => dispatch => {
     dispatch({type: DELETING_RECIPE});
     deleteRecipeReq(args)
         .then(res => {
-            console.log(res);
+            // console.log(res);
             dispatch({type: DELETE_RECIPE_SUCCESS, payload: res});
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             dispatch({type: DELETE_RECIPE_ERROR, payload: err});
         });
 };
